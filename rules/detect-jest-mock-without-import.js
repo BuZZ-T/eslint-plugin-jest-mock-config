@@ -44,9 +44,25 @@ module.exports = {
             category: '',
             recommended: true,
             url: '',
-        }
+        },
+        schema: [
+            {
+                type: 'object',
+                properties: {
+                    ignore: {
+                        type: 'array',
+                        items: {
+                            type: 'string',
+                        },
+                    },
+                },
+                additionalProperties: false,
+            },
+        ],
     },
     create: function(context) {
+        const pathsToIgnore = context.options[0]?.ignore || [];
+
         return {
             CallExpression: function(node) {
                 const jestMockCallPath = extractJestMockCallPath(node);
@@ -60,7 +76,7 @@ module.exports = {
 
                 const importPaths = getImportPaths(program);
 
-                if (!importPaths.includes(jestMockCallPath)) {
+                if (!importPaths.includes(jestMockCallPath) && !pathsToIgnore.includes(jestMockCallPath)) {
                     context.report({
                         node,
                         message: `jest.mock() path "${jestMockCallPath}" is not imported`
