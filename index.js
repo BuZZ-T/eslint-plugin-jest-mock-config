@@ -14,15 +14,15 @@ const tester = new RuleTester({
 
 module.exports = {
     rules: {
-        'detect-jest-mock-without-import': require('./rules/detect-jest-mock-without-import'),
+        'jest-mock-without-import': require('./rules/jest-mock-without-import'),
     },
     rulesConfig: {
-        'detect-jest-mock-without-import': 0,
+        'jest-mock-without-import': 0,
     },
     configs: {
         recommended: {
             rules: {
-                'jest-mock-path/detect-jest-mock-without-import': 'error',
+                'jest-mock-path/jest-mock-without-import': 'error',
             },
         },
     }
