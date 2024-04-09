@@ -25,6 +25,10 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
                    jest.mock('../some/relative/path');`,
         },
         {
+            code: `import something from 'some-absolute-path';
+                   jest.mock('some-absolute-path');`,
+        },
+        {
             code: `import * as something from 'some-absolute-path';
                    jest.mock('some-absolute-path');`,
         },
@@ -43,6 +47,11 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
         {
             code: `const { something } = require('../some/relative/path');
                    jest.mock('../some/relative/path');`,
+        },
+        {
+            code: `const something = require('some-absolute-path');
+                   const { someFunction } = something;
+                   jest.mock('some-absolute-path');`,
         },
         {
             code: `jest.mock('some-path-to-ignore');`,
