@@ -1,4 +1,4 @@
-# eslint-plugin-jest-mock-path
+# eslint-plugin-jest-mock-config
 
 ESLint rules for mocking using
 ## Rules
@@ -14,10 +14,10 @@ This Plugin currently contains the following ESLint rules:
 
 ```sh
 # npm
-npm install --safe-dev eslint-plugin-jest-mock-path
+npm install --safe-dev eslint-plugin-jest-mock-config
 
 #yarn
-yarn add --dev eslint-plugin-jest-mock-path
+yarn add --dev eslint-plugin-jest-mock-config
 ```
 
 
