@@ -58,6 +58,9 @@ module.exports = {
                     ignoreMockWithFactory: {
                         type: 'boolean',
                     },
+                    ignoreVirtual: {
+                        type: 'boolean',
+                    },
                     ignorePatterns: {
                         type: 'array',
                         items: {
@@ -73,6 +76,7 @@ module.exports = {
         const pathsToIgnore = context.options[0]?.ignorePaths || [];
         const patternsToIgnore = (context.options[0]?.ignorePatterns || []).map(pattern => typeof pattern === 'string' ? new RegExp(pattern) : pattern);
         const isIgnoreMockWithFactory = !!context.options[0]?.ignoreMockWithFactory;
+        const isIgnoreVirtual = !!context.options[0]?.ignoreVirtual;
 
         return {
             CallExpression: function(node) {
@@ -83,6 +87,13 @@ module.exports = {
                 }
 
                 if (isIgnoreMockWithFactory && node.arguments.length > 1) {
+                    return;
+                }
+
+                if (isIgnoreVirtual
+                        && node.arguments.length > 2
+                        && node.arguments[2].type === 'ObjectExpression'
+                        && node.arguments[2].properties.some(p => p.key.name === 'virtual' && p.value.value === true)) {
                     return;
                 }
 
