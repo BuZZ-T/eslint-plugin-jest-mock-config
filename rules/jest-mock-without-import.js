@@ -5,32 +5,7 @@
 
 'use strict';
 
-//------------------------------------------------------------------------------
-// Utils
-//------------------------------------------------------------------------------
-
-
-function extractJestMockCallPath(node) {
-    if (node.callee?.object?.name === 'jest' && node.callee?.property?.name === 'mock') {
-        return node.arguments?.[0].value;
-    } 
-    
-    return undefined;
-}
-
-function getImportPaths(program) {
-    const imports = program.body
-        .filter((entry) => entry.type === 'ImportDeclaration')
-        .map(entry => entry.source.value);
-
-    const requires = program.body
-        .filter((entry) => entry.type === 'VariableDeclaration')
-        .flatMap((d) => d.declarations)
-        .filter((d) => d.init?.callee?.name === 'require')
-        .map((d) => d.init.arguments[0].value);
-
-    return [...imports, ...requires];
-}
+const { extractJestMockCallPath, getImportPaths } = require('../utils/utils');
 
 //------------------------------------------------------------------------------
 // Rule Definition
@@ -73,6 +48,8 @@ module.exports = {
         ],
     },
     create: function(context) {
+        const { sourceCode } = context;
+
         const pathsToIgnore = context.options[0]?.ignorePaths || [];
         const patternsToIgnore = (context.options[0]?.ignorePatterns || []).map(pattern => typeof pattern === 'string' ? new RegExp(pattern) : pattern);
         const isIgnoreMockWithFactory = !!context.options[0]?.ignoreMockWithFactory;
@@ -97,8 +74,13 @@ module.exports = {
                     return;
                 }
 
+                // eslint8 / eslint9 compatibility
+                const ancestors = sourceCode.getAncestors
+                    ? sourceCode.getAncestors(node)
+                    : context.getAncestors();
+                
                 // this only works, when imports are on top level!
-                const program = context.getAncestors()[0];
+                const program = ancestors[0];
 
                 const importPaths = getImportPaths(program);
 

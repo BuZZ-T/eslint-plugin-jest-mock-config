@@ -54,6 +54,19 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
                    jest.mock('some-absolute-path');`,
         },
         {
+            code: `const other = require('some-other-absolute-path'), something = require('some-absolute-path');
+                   const { someFunction } = something;
+                   jest.mock('some-absolute-path');`,
+        },
+        {
+            code: `const someObject = require('some-absolute-path');
+                   const someFnLocal = someObject.someFn;
+  
+                   jest.mock('some-absolute-path');
+  
+                   const someFnMocked = jest.mocked(someFnLocal);`
+        },
+        {
             code: `jest.mock('some-path-to-ignore');`,
             options: [{ ignorePaths: ['some-path-to-ignore'] }],
         },
