@@ -52,10 +52,3 @@ jest.mock('/some/path', () => ({ someFunction: () => { ... } }))
 ## ESLint 8 / 9 compatibility
 
 Rules included in this ESLint plugin are tested with Version 8 and 9 of ESLint. Please report bugs [here](https://github.com/BuZZ-T/eslint-plugin-jest-mock-config/issues), if you still encounter some.
-
-## TODOs
-* run linting
-* eslint9 compatibility
-* mocked without mock rule
-* docs of rules
-* move static values (using `program` out of callback
