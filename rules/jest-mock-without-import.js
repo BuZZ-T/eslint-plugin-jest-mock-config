@@ -13,12 +13,15 @@ const { extractJestMockCallPath, getImportPaths } = require('../utils/utils');
 
 module.exports = {
     meta: {
-        type: 'error',
+        type: 'problem',
         docs: {
-            description: '',
+            description: 'disallow jest.mock() calls, which are not imported',
             category: '',
             recommended: true,
             url: '',
+        },
+        messages: {
+            jestMockPathNotImported: 'jest.mock() path "{{path}}" is not imported',
         },
         schema: [
             {
@@ -87,10 +90,13 @@ module.exports = {
                 if (!importPaths.includes(jestMockCallPath) && !pathsToIgnore.includes(jestMockCallPath) && !patternsToIgnore.some(pattern => pattern.test(jestMockCallPath))) {
                     context.report({
                         node,
-                        message: `jest.mock() path "${jestMockCallPath}" is not imported`
+                        data: {
+                            path: jestMockCallPath,
+                        },
+                        messageId: 'jestMockPathNotImported',
                     });
                 }
             }
-        }
+        };
     }
 };

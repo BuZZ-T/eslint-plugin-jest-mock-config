@@ -112,6 +112,15 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
           options: [{ follow: true }],
           name: 'import object with follow and destructuring',
         },
+        {
+          code: `const someFnLocal = require('some-absolute-path').someFn;
+                 
+                 jest.mock('some-absolute-path');
+
+                 const someFnMocked = jest.mocked(someFnLocal);`,
+          options: [{ follow: true }],
+          name: 'require with renaming',
+        }
       ],
       invalid: [
         {
