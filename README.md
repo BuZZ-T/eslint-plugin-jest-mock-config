@@ -49,6 +49,6 @@ If you are using [jest](https://www.npmjs.com/package/jest) with JavaScript or T
 jest.mock('/some/path', () => ({ someFunction: () => { ... } }))
 ```
 
-## ESLint 8 / 9 compatibility
+## ESLint7 /  8 / 9 compatibility
 
-Rules included in this ESLint plugin are tested with Version 8 and 9 of ESLint. Please report bugs [here](https://github.com/BuZZ-T/eslint-plugin-jest-mock-config/issues), if you still encounter some.
+Rules included in this ESLint plugin are tested with Version 7 / 8 and 9 of ESLint. Please report bugs [here](https://github.com/BuZZ-T/eslint-plugin-jest-mock-config/issues), if you still encounter some.
