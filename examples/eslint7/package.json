@@ -1,0 +1,17 @@
+{
+  "name": "eslint7",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "eslint": "^7.32.0",
+    "eslint-plugin-jest-mock-config": "file:../../",
+    "jest": "^29.7.0"
+  }
+}
