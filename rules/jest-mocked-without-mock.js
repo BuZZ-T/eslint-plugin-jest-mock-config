@@ -48,7 +48,7 @@ module.exports = {
                 // source, which is passed to jest.mocked
                 const mockedCallSource = node.init.arguments[0].name;
 
-                // eslint8 / eslint9 compatibility
+                // eslint7 / eslint8 / eslint9 compatibility
                 const ancestors = sourceCode?.getAncestors
                     ? sourceCode.getAncestors(node)
                     : context.getAncestors();

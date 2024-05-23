@@ -7,10 +7,6 @@
 
 const { extractJestMockCallPath, getImportPaths } = require('../utils/utils');
 
-//------------------------------------------------------------------------------
-// Rule Definition
-//------------------------------------------------------------------------------
-
 module.exports = {
     meta: {
         type: 'problem',
