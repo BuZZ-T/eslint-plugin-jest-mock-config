@@ -7,6 +7,7 @@
 module.exports = {
     rules: {
         'jest-mock-without-import': require('./rules/jest-mock-without-import'),
+        'jest-mocked-without-mock': require('./rules/jest-mocked-without-mock'),
     },
     rulesConfig: {
         'jest-mock-without-import': 0,

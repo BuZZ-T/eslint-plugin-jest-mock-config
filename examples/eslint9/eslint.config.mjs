@@ -5,9 +5,7 @@ export default {
         'jest-mock-config': jestMockConfig
     },
     rules: {
-        'jest-mock-config/jest-mock-without-import': [
-            'error',
-            // { ignorePaths: ['~globals/utils/logger'], ignoreMockWithFactory: true },
-          ],
+        'jest-mock-config/jest-mock-without-import': 'error',
+        'jest-mock-config/jest-mocked-without-mock': 'error',
     },
 }
