@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-jest-mock-config",
-  "version": "1.0.0-beta.3",
+  "version": "1.0.0-beta.4",
   "description": "Rules for paths in jest.mock(...)",
   "main": "index.js",
   "scripts": {
