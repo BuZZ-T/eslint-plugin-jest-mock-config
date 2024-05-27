@@ -21,14 +21,6 @@ npm install --safe-dev eslint-plugin-jest-mock-config
 yarn add --dev eslint-plugin-jest-mock-config
 ```
 
-
-
-#### Additional note
-Of cource this works for absolute and relative paths. Decide on your own, if ignoring relative paths is useful!
-
-
-
-
 ## Development
 
 ### Tests

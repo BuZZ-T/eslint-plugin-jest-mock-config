@@ -39,7 +39,7 @@ module.exports = {
 
         return {
             VariableDeclarator: function(node) {
-                if (node.init.type !== 'CallExpression'
+                if (node.init?.type !== 'CallExpression'
                     || node.init.callee?.object?.name !== 'jest'
                     || node.init.callee?.property?.name !== 'mocked') {
                     return;
