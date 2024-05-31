@@ -1,5 +1,7 @@
 # eslint-plugin-jest-mock-config
 
+[![NPM Version](https://img.shields.io/npm/v/eslint-plugin-jest-mock-config.svg)](https://www.npmjs.com/package/eslint-plugin-jest-mock-config) [![Package License](https://img.shields.io/npm/l/eslint-plugin-jest-mock-config.svg)](https://www.npmjs.com/package/eslint-plugin-jest-mock-config)
+
 ESLint rules for mocking in `jest` using `jest.mock(...)`.
 ## Rules
 
