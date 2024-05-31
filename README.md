@@ -1,6 +1,6 @@
 # eslint-plugin-jest-mock-config
 
-[![NPM Version](https://img.shields.io/npm/v/eslint-plugin-jest-mock-config.svg)](https://www.npmjs.com/package/eslint-plugin-jest-mock-config) [![Package License](https://img.shields.io/npm/l/eslint-plugin-jest-mock-config.svg)](https://www.npmjs.com/package/eslint-plugin-jest-mock-config) ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/BuZZ-T/eslint-plugin-jest-mock-config/test.yml)
+[![NPM Version](https://img.shields.io/npm/v/eslint-plugin-jest-mock-config.svg)](https://www.npmjs.com/package/eslint-plugin-jest-mock-config) [![Package License](https://img.shields.io/npm/l/eslint-plugin-jest-mock-config.svg)](https://www.npmjs.com/package/eslint-plugin-jest-mock-config) [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/BuZZ-T/eslint-plugin-jest-mock-config/test.yml?branch=main)](https://img.shields.io/github/actions/workflow/status/BuZZ-T/eslint-plugin-jest-mock-config/test.yml?branch=main)
 
 
 ESLint rules for mocking in `jest` using `jest.mock(...)`.
