@@ -10,7 +10,7 @@ This Plugin currently contains the following ESLint rules:
 
 | Name | Description | Documentation
 | - | - | -
-| `jest-mock-without-import` | Reports `jest.mock(<path>)`, when no import of `<path>` exitsts  | [Link](docs/rules/jest-mock-without-import.md)
+| `jest-mock-without-import` | Reports `jest.mock(<path>)`, when no import of `<path>` exists  | [Link](docs/rules/jest-mock-without-import.md)
 | `jest-mocked-without-mock` | Reports `jest.mocked(<function>)`, when the import of `<function>` is not mocked via `jest.mock`  | [Link](docs/rules/jest-mocked-without-mock.md)
 | `jest-mock-multiple-with-same-path` | Reports, if `jest.mock(<path>)` is used multiple times with the same path in one file | [Link](docs/rules/jest-mock-multiple-with-same-path.md)
 
