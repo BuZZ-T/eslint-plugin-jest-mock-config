@@ -131,3 +131,10 @@ module.exports.follow = function follow(imports, variables, variable) {
         }
     }
 };
+
+module.exports.getPreviousSibling = function getPreviousSibling(node) {
+    const parent = node.parent;
+    const index = parent?.body?.indexOf(node);
+
+    return parent.body[index - 1 ?? -1];
+};
