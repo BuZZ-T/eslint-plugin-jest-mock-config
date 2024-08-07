@@ -12,9 +12,8 @@ module.exports = {
         type: 'problem',
         docs: {
             description: 'disallow jest.mock() calls, which are not imported',
-            category: '',
             recommended: true,
-            url: '',
+            url: 'https://github.com/BuZZ-T/eslint-plugin-jest-mock-config/blob/main/docs/rules/jest-mock-without-import.md',
         },
         messages: {
             jestMockPathNotImported: 'jest.mock() path "{{path}}" is not imported',

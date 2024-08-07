@@ -4,10 +4,11 @@
 
 * Having a better overview of mocks
 * Have a more readable test file
+* Creating the mock using `jest.mocked` on top level outside of `describe`
 
 ## Reasons to not use this ESLint rule
 
-* using a different way to organize the mocks
+* using a different way to organize the mocks (like `jest-mock-grouped` and `jest.mocked.grouped`)
 * don't want to have a strict grouping of mocks
 
 ## Correct usages

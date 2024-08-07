@@ -11,9 +11,8 @@ module.exports = {
         type: 'problem',
         docs: {
             description: 'disallow jest.mocked() calls, which are not mocked with jest.mock()',
-            category: '',
             recommended: true,
-            url: '',
+            url: 'https://github.com/BuZZ-T/eslint-plugin-jest-mock-config/blob/main/docs/rules/jest-mocked-without-mock.md',
         },
         messages: {
             jestMockPathNotImported: `jest.mocked({{mockedCallSource}}), but it's import path "{{mockedImportPath}}" is not mocked with jest.mock()`,

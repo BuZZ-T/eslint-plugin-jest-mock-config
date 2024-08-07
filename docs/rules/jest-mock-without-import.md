@@ -45,44 +45,44 @@ jest.mock('../some/path/to/file');
 #### using import with "*" syntax
 **code:**
 ```
-import * as someFunction from 'some-package'
+import * as someFunction from 'some-package';
 
-jest.mock('some-package')
+jest.mock('some-package');
 ```
 
 **code:**
 ```
-import * as someFunction from '../some/path/to/file'
+import * as someFunction from '../some/path/to/file';
 
-jest.mock('../some/path/to/file')
+jest.mock('../some/path/to/file');
 ```
 #### using `require`
 **code:**
 ```
 const someFunction = require('some-package');
 
-jest.mock('some-package')
+jest.mock('some-package');
 ```
 
 **code:**
 ```
 const someFunction = require('../some/path/to/file');
 
-jest.mock('../some/path/to/file')
+jest.mock('../some/path/to/file');
 ```
 #### using `require` with destructoring
 **code:**
 ```
 const { someFunction } = require('some-package');
 
-jest.mock('some-package')
+jest.mock('some-package');
 ```
 
 **code:**
 ```
 const { someFunction } = require('../some/path/to/file');
 
-jest.mock('../some/path/to/file')
+jest.mock('../some/path/to/file');
 ```
 
 #### with configuration ignorePaths
@@ -102,7 +102,7 @@ jest.mock('some-package');
 ```
 **configuration:**
 ```
-['error', { ignorePatterns: ['some-.*'] };
+['error', { ignorePatterns: ['some-.*'] }]
 ```
 
 #### with configuration ignorePatterns using a regex
@@ -112,7 +112,7 @@ jest.mock('some-package');
 ```
 **configuration:**
 ```
-['error', { ignorePatterns: [/some-.*/ };
+['error', { ignorePatterns: [/some-.*/ }]
 ```
 
 #### with configuration ignoreMockWithFactory
@@ -135,7 +135,7 @@ jest.mock('some-package', () => { someFunction: jest.mock() }, { virtual: true }
 ['error', { ignoreVirtual: true }]
 ```
 
-### Invalid usages
+### Incorrect usages
 
 #### absolute path without import
 **code:**
