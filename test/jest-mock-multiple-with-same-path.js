@@ -55,7 +55,6 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
                      jest.mock('some-absolute-path');
                      jest.mock('some-absolute-path');
                      jest.mock('some-absolute-path');`,
-
             errors: [
                 'jest.mock(\'some-absolute-path\') is used more than once',
                 'jest.mock(\'some-absolute-path\') is used more than once',
@@ -75,11 +74,20 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
                      jest.mock('../path/to/file');
                      jest.mock('../path/to/file');
                      jest.mock('../path/to/file');`,
-
             errors: [
                 'jest.mock(\'../path/to/file\') is used more than once',
                 'jest.mock(\'../path/to/file\') is used more than once',
                 'jest.mock(\'../path/to/file\') is used more than once',
+            ],
+        },
+        {
+            name: 'jest.mock path twice, one of them with factory',
+            code: `import { something } from 'some-absolute-path';
+                   jest.mock('some-absolute-path');
+                   jest.mock('some-absolute-path', () => ({ someFn: jest.fn() }));`,
+            errors: [
+                'jest.mock(\'some-absolute-path\') is used more than once',
+                'jest.mock(\'some-absolute-path\') is used more than once',
             ],
         },
     ],

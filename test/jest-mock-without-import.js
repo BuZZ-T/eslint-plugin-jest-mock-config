@@ -99,12 +99,12 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
             name: 'ignore pattern 2',
         },
         {
-            code: `jest.mock('some-path-to-ignore', () => { someFn: jest.fn() });`,
+            code: `jest.mock('some-path-to-ignore', () => ({ someFn: jest.fn() }));`,
             options: [{ ignoreMockWithFactory: true }],
             name: 'ignore absolute path with factory',
         },
         {
-            code: `jest.mock('../some/relative/path/to/ignore', () => { someFn: jest.fn() });`,
+            code: `jest.mock('../some/relative/path/to/ignore', () => ({ someFn: jest.fn() }));`,
             options: [{ ignoreMockWithFactory: true }],
             name: 'ignore relative path with factory',
         },
@@ -119,7 +119,7 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
             name: 'ignore relative path with factory object',
         },
         {
-            code: `jest.mock('some-path-to-ignore', () => { someFn: jest.fn()}, { virtual: true });`,
+            code: `jest.mock('some-path-to-ignore', () => ({ someFn: jest.fn()}), { virtual: true });`,
             options: [{ ignoreVirtual: true }],
             name: 'ignore absolute path with virtual',
         },
@@ -163,12 +163,12 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
             name: 'missing relative path with factory object without ignoreMockWithFactory',
         },
         {
-            code: `jest.mock('some-absolute-path', () => { someFn: jest.fn()}, { virtual: true });`,
+            code: `jest.mock('some-absolute-path', () => ({ someFn: jest.fn()}), { virtual: true });`,
             errors: [ { message: 'jest.mock() path "some-absolute-path" is not imported'}],
             name: 'missing absolute path with virtual',
         },
         {
-            code: `jest.mock('some-absolute-path', () => { someFn: jest.fn()}, { virtual: false });`,
+            code: `jest.mock('some-absolute-path', () => ({ someFn: jest.fn()}), { virtual: false });`,
             options: [{ ignoreVirtual: true }],
             errors: [ { message: 'jest.mock() path "some-absolute-path" is not imported'}],
             name: 'missing absolute path with virtual: false and ignoreVirtual',
