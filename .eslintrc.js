@@ -6,6 +6,7 @@ module.exports = {
       "no-console": "error",
       "no-unused-vars": "error",
       "semi": ["error", "always"],
+      "no-debugger": "error",
     },
     "parserOptions": {
         "ecmaVersion": "latest"

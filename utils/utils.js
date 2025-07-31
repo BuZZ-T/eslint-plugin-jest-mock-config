@@ -146,3 +146,9 @@ module.exports.getPreviousSibling = function getPreviousSibling(node) {
 
     return parent.body[index - 1 ?? -1];
 };
+
+module.exports.isJestMockedCall = function isJestMockedCall(node) {
+    return node.init?.type === 'CallExpression'
+        && node.init.callee?.object?.name === 'jest'
+        && node.init.callee?.property?.name === 'mocked';
+};

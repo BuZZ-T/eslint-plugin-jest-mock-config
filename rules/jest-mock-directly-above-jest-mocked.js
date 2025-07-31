@@ -4,7 +4,7 @@
 
 'use strict';
 
-const { getPreviousSibling, getImports } = require("../utils/utils");
+const { getPreviousSibling, getImports, isJestMockedCall } = require("../utils/utils");
 
 module.exports = {
     meta: {
@@ -26,16 +26,18 @@ module.exports = {
 
         return {
             VariableDeclarator: function(node) {
-                if (node.init?.type !== 'CallExpression'
-                    || node.init.callee?.object?.name !== 'jest'
-                    || node.init.callee?.property?.name !== 'mocked') {
+                if (!isJestMockedCall(node)) {
                     return;
                 }
 
-                debugger;
-
                 const previousStatement = getPreviousSibling(node.parent);
 
+                if (previousStatement?.type === 'VariableDeclaration'
+                    && previousStatement?.declarations.some(declaration => isJestMockedCall(declaration)
+                    && declaration.init?.arguments[0]?.name === node.init.arguments[0]?.name)) {
+                    return;
+                }
+                
                 if (previousStatement?.type !== 'ExpressionStatement') {
                     context.report({
                         node,
