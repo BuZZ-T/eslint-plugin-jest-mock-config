@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.0-beta-10
+* add missing case for `jest-mock-directly-above-jest-mocked`
+* apply security patches to main project and examples
+
+## 1.0.0-beta-9
+* apply security patch
+* housekeeping
+
 ## 1.0.0-beta-8
 * add rules
   * jest-mock-grouped
