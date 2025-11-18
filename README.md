@@ -15,7 +15,9 @@ This Plugin currently contains the following ESLint rules:
 | `jest-mocked-without-mock` | Reports `jest.mocked(<function>)`, when the import of `<function>` is not mocked via `jest.mock`  | [Link](docs/rules/jest-mocked-without-mock.md)
 | `jest-mock-multiple-with-same-path` | Reports, if `jest.mock(<path>)` is used multiple times with the same path in one file | [Link](docs/rules/jest-mock-multiple-with-same-path.md)
 | **Layouting rules**
-| `jest-mock-directly-above-jest-mocked` | Reports, if a `jest.mock()` call and its corresponding `jest.mocked` call don't come directly after each other | [Link](docs/rules/jest-mock-directly-above-jest-mocked.md)
+| `jest-mock-directly-above-jest-mocked` | Reports, if a `jest.mock()` call and its corresponding `jest.mocked` call don't come directly after each other. Conflicts with `jest-mock-grouped` and `jest-mocked-grouped` | [Link](docs/rules/jest-mock-directly-above-jest-mocked.md)
+| `jest-mock-grouped` | Reports, if not all `jest.mock()` calls come directly after each other. Conflicts with `jest-mock-directly-above-jest-mocked` | [Link](docs/rules/jest-mock-grouped.md)
+| `jest-mocked-grouped` | Reports, if not all `jest.mocked()` calls come directly after each other. Conflicts with `jest-mock-directly-above-jest-mocked` | [Link](docs/rules/jest-mocked-grouped.md)
 
 ## Installation
 

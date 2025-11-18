@@ -11,9 +11,8 @@ module.exports = {
         type: 'layout',
         docs: {
             description: 'enforces "tuples" of jest.mock and jest.mocked to be directly above each other',
-            category: '',
             recommended: false,
-            url: '',
+            url: 'https://github.com/BuZZ-T/eslint-plugin-jest-mock-config/blob/main/docs/rules/jest-mock-directly-above-jest-mocked.md',
         },
         messages: {
             noJestMockAbove: 'jest.mock should be directly above jest.mocked',

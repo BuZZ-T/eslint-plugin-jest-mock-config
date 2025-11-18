@@ -70,15 +70,23 @@ module.exports.getImports = function getImports(program) {
 };
 
 /**
- * Extracts all paths of jest.mock expressions
+ * Extracts all jest.mock calls from the given program
  */
-module.exports.getMockPaths = function(programm) {
-    return programm.body.filter(entry => 
+function getMocks(program) {
+    return program.body.filter(entry => 
         entry.type === 'ExpressionStatement'
         && entry.expression.callee?.object?.name === 'jest'
         && entry.expression.callee?.property?.name === 'mock'
-    )
-    .map(entry => entry.expression.arguments[0].value);
+    );
+};
+module.exports.getMocks = getMocks;
+
+/**
+ * Extracts all paths of jest.mock expressions
+ */
+module.exports.getMockPaths = function(program) {
+    return getMocks(program)
+        .map(entry => entry.expression.arguments[0].value);
 };
 
 module.exports.getVariables = function(program) {

@@ -10,6 +10,8 @@ module.exports = {
         'jest-mocked-without-mock': require('./rules/jest-mocked-without-mock'),
         'jest-mock-multiple-with-same-path': require('./rules/jest-mock-multiple-with-same-path'),
         'jest-mock-directly-above-jest-mocked': require('./rules/jest-mock-directly-above-jest-mocked'),
+        'jest-mock-grouped': require('./rules/jest-mock-grouped'),
+        'jest-mocked-grouped': require('./rules/jest-mocked-grouped'),
     },
     rulesConfig: {
         'jest-mock-without-import': 0,
