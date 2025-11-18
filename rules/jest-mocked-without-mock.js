@@ -9,12 +9,17 @@ const { follow, getImports, getMockPaths, getVariables } = require('../utils/uti
 
 module.exports = {
     meta: {
-        type: 'error',
+        type: 'problem',
         docs: {
-            description: '',
+            description: 'disallow jest.mocked() calls, which are not mocked with jest.mock()',
             category: '',
             recommended: true,
             url: '',
+        },
+        messages: {
+            jestMockPathNotImported: `jest.mocked({{mockedCallSource}}), but it's import path "{{mockedImportPath}}" is not mocked with jest.mock()`,
+            jestMockedPathNotImported: `jest.mocked({{mockedCallSource}}), but it's import path is not found. Be sure to directly import it, or use "follow: true"`
+
         },
         schema: [
             {
@@ -61,14 +66,17 @@ module.exports = {
                 if (!mockedImportPath && !doFollow) {
                     context.report({
                         node,
-                        message: `jest.mocked(${mockedCallSource}), but it's import path is not found. Be sure to directly import it, or use "follow: true"`
-                    })
+                        data: {
+                            mockedCallSource,
+                        },
+                        messageId: 'jestMockedPathNotImported',
+                    });
                     return;
                 }
 
                 if (!mockedImportPath && doFollow) {
                     const vars = getVariables(program);
-                    mockedImportPath = follow(imports, vars, mockedCallSource)
+                    mockedImportPath = follow(imports, vars, mockedCallSource);
                 }
 
                 // array of paths, for which jest.mock is called
@@ -78,10 +86,14 @@ module.exports = {
                 if (!isImported) {
                     context.report({
                         node,
-                        message: `jest.mocked(${mockedCallSource}), but it's import path "${mockedImportPath}" is not mocked with jest.mock()`
+                        data: {
+                            mockedCallSource,
+                            mockedImportPath,
+                        },
+                        messageId: 'jestMockPathNotImported',
                     });
                 }
             }
-        }
+        };
     }
-}
+};

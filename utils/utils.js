@@ -4,7 +4,7 @@ module.exports.extractJestMockCallPath = function extractJestMockCallPath(node) 
     } 
     
     return undefined;
-}
+};
 
 module.exports.extractJestMockedCallSource = function extractJestMockCallPath(node) {
     if (node.callee?.object?.name === 'jest' && node.callee?.property?.name === 'mocked') {
@@ -12,7 +12,7 @@ module.exports.extractJestMockedCallSource = function extractJestMockCallPath(no
     } 
     
     return undefined;
-}
+};
 
 module.exports.getImportPaths = function getImportPaths(program) {
     const imports = program.body
@@ -26,7 +26,7 @@ module.exports.getImportPaths = function getImportPaths(program) {
         .map((d) => d.init.arguments[0].value);
 
     return [...imports, ...requires];
-}
+};
 
 module.exports.getImports = function getImports(program) {
     const imports = program.body
@@ -64,7 +64,7 @@ module.exports.getImports = function getImports(program) {
         }, imports);
 
     return requiresAndImports;
-}
+};
 
 module.exports.getMockPaths = function(programm) {
     return programm.body.filter(entry => 
@@ -73,7 +73,7 @@ module.exports.getMockPaths = function(programm) {
         && entry.expression.callee?.property?.name === 'mock'
     )
     .map(entry => entry.expression.arguments[0].value);
-}
+};
 
 module.exports.getVariables = function(program) {
     const variables = program.body
@@ -93,7 +93,7 @@ module.exports.getVariables = function(program) {
         }, {});
 
     return variables;
-}
+};
 
 module.exports.follow = function follow(imports, variables, variable) {
     if (!variable) {
@@ -109,7 +109,16 @@ module.exports.follow = function follow(imports, variables, variable) {
         if (variableValue.type === 'Identifier') {
             return follow(imports, variables, variableValue.name);
         } else if (variableValue.type === 'MemberExpression') {
-            return follow(imports, variables, variableValue.object.name);
+            if (variableValue.object.type === 'CallExpression' && variableValue.object.callee.name === 'require') {
+                // found require
+                const importName = variableValue?.object.arguments[0].value;
+
+                if (importName) {
+                    return importName;
+                }
+            }
+
+            return follow(imports, variables, variableValue.object.name || variableValue.property.name);
         }
     }
-}
+};
