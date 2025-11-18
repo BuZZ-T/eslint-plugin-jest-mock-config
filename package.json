@@ -4,7 +4,7 @@
   "description": "Rules for paths in jest.mock(...)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test/**/*"
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,10 @@
   "bugs": {
     "url": "https://github.com/BuZZ-T/eslint-plugin-jest-mock-path/issues"
   },
-  "homepage": "https://github.com/BuZZ-T/eslint-plugin-jest-mock-path#readme"
+  "homepage": "https://github.com/BuZZ-T/eslint-plugin-jest-mock-path#readme",
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-plugin-eslint-plugin": "^5.4.0",
+    "mocha": "^10.3.0"
+  }
 }
