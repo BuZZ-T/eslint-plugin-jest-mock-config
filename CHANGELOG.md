@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.0.0-beta.6
+* remove `examples/` folder from build artifact
+
+## 1.0.0-beta.5
+* adapt error message for `jest-mock-multiple-with-same-path`
+* make `jest.mocked-without-mock` robost for `let` declarators without initialisation
+
+## 1.0.0-beta.4
+* add `jest-mock-multiple-with-same-path` rule
+
+## 1.0.0-beta.3
+* add `examples/`, testing this plugin with eslint version 7, 8 and 9
+* add github-action to lint and test the project and run the examples
+
 ## 1.0.0-beta.2
 
 ** Changelog**
