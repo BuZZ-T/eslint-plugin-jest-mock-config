@@ -26,7 +26,7 @@ jobs:
 
     strategy:
       matrix:
-        eslint-version: [7, 8, 9]
+        eslint-version: [7, 8, 9, "7-recommended", "8-recommended", "9-recommended"]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -36,4 +36,4 @@ jobs:
         run: |
           cd examples/eslint${{ matrix.eslint-version }}
           npm ci
-          npm run lint
+          TIMING=1 npm run lint
