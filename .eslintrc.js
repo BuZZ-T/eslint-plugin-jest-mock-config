@@ -1,5 +1,6 @@
 module.exports = {
     "extends": ["plugin:eslint-plugin/recommended"],
+    "ignorePatterns": ["examples/"],
     "rules": {
       "eslint-plugin/require-meta-docs-description": "error",
       "no-console": "error",
