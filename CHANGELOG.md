@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.0-beta.7
+* add `jest-mock-directly-above-jest-mocked` rule
+
 ## 1.0.0-beta.6
 * remove `examples/` folder from build artifact
 
