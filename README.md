@@ -58,7 +58,7 @@ yarn add --dev eslint-plugin-jest-mock-path
 
 ## Configuration
 
-### ignore
+### ignorePaths
 
 #### Type
 Array of strings
@@ -78,12 +78,48 @@ The path of this mock is not covered by this rule so renaming and refactoring ma
 
 #### Example  (.eslintrc.js):
 ```
-'detect-jest-mock-without-import': ['error', {ignore: ['path-to-ignore']}],
+'detect-jest-mock-without-import': ['error', {ignorePaths: ['path-to-ignore']}],
 ```
 
 #### Additional note
 Of cource this works for absolute and relative paths. Decide on your own, if ignoring relative paths is useful!
 
+### ignorePatterns
+
+#### Type
+Array of strings
+
+#### Consequence
+
+Basically the same as `ignorePaths`, but Regular Expressions (as string or Regex can be used.
+
+#### Reasons to use
+Same as `ignorePaths`, but all packages of a framework or a complete subpath should be ignored.
+
+#### Example  (.eslintrc.js):
+```
+'detect-jest-mock-without-import': ['error', {ignorePatterns: ['pattern-as-string', /pattern-as-regex/]}],
+```
+
+### ignoreMockWithFactory
+
+#### Type
+Boolean
+
+#### Consequence
+
+The second parameter of the `jest.mock()` Funktion is a so called factory. It allows to directly specify the mock without using `.mockReturnValue`.
+
+If `ignoreMockWithFactory` is set to `true`, `jest.mock()` calls with a factory set, are not checked.
+
+#### Reasons to use
+
+For some cases, using a factory is sufficient. Especially, when the mocked value is the same for every test. In this cases, it might be useful to disable this rule as no import of mocked entities need to be done.
+
+#### Example  (.eslintrc.js):
+```
+'detect-jest-mock-without-import': ['error', {ignoreMockWithFactory: true} ],
+```
 
 
 ## Development
