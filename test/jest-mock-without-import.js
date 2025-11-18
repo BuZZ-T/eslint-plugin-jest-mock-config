@@ -1,6 +1,6 @@
 'use strict';
 
-const RuleTester = require('eslint').RuleTester;
+const { RuleTester } = require('eslint');
 const tester = new RuleTester({
   parserOptions: {
     ecmaVersion: 6,
