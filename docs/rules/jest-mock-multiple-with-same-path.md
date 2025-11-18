@@ -16,7 +16,7 @@
 jest.mock('some-package');
 ```
 
-### Invalid usages
+### Incorrect usages
 
 #### using jest.mock with the same path twice
 **code:**

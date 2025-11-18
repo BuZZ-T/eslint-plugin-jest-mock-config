@@ -33,7 +33,7 @@ import someFn from 'some-absolute-path';
 
 jest.mock('some-absolute-path');
 
-const someFnMock = jest.mocked(someFn)'
+const someFnMock = jest.mocked(someFn)';
 ```
 
 ```ts
@@ -41,7 +41,7 @@ import someFn from '../some/path/to/file';
 
 jest.mock('../some/path/to/file');
 
-const someFnMock = jest.mocked(someFn)'
+const someFnMock = jest.mocked(someFn)';
 ```
 
 #### using import with asterisk
@@ -50,7 +50,7 @@ import * as someFn from 'some-absolute-path';
 
 jest.mock('some-absolute-path');
 
-const someFnMock = jest.mocked(someFn)'
+const someFnMock = jest.mocked(someFn)';
 ```
 
 ```ts
@@ -58,7 +58,7 @@ import * as someFn from '../some/path/to/file';
 
 jest.mock('../some/path/to/file');
 
-const someFnMock = jest.mocked(someFn)'
+const someFnMock = jest.mocked(someFn)';
 ```
 
 #### using require with object
@@ -67,7 +67,7 @@ const { someFn } = require('some-absolute-path');
 
 jest.mock('some-absolute-path');
 
-const someFnMock = jest.mocked(someFn)'
+const someFnMock = jest.mocked(someFn)';
 ```
 
 ```ts
@@ -75,7 +75,7 @@ const { someFn } = require('../some/path/to/file');
 
 jest.mock('../some/path/to/file');
 
-const someFnMock = jest.mocked(someFn)'
+const someFnMock = jest.mocked(someFn)';
 ```
 
 #### using require with default
@@ -84,7 +84,7 @@ const someFn = require('some-absolute-path');
 
 jest.mock('some-absolute-path');
 
-const someFnMock = jest.mocked(someFn)'
+const someFnMock = jest.mocked(someFn)';
 ```
 
 ```ts
@@ -92,7 +92,7 @@ const someFn = require('../some/path/to/file');
 
 jest.mock('../some/path/to/file');
 
-const someFnMock = jest.mocked(someFn)'
+const someFnMock = jest.mocked(someFn)';
 ```
 
 #### accessing object with `{ follow: true }`
@@ -105,7 +105,7 @@ const someFn = someObject.someFn;
 
 jest.mock('some-absolute-path');
 
-const someFnMock = jest.mocked(someFn)'
+const someFnMock = jest.mocked(someFn)';
 ```
 
 **configuration:**
@@ -123,7 +123,7 @@ const { someFn } = someObject;
 
 jest.mock('some-absolute-path');
 
-const someFnMock = jest.mocked(someFn)'
+const someFnMock = jest.mocked(someFn)';
 ```
 
 **configuration:**
@@ -131,7 +131,7 @@ const someFnMock = jest.mocked(someFn)'
 ['error', { follow: true }]
 ```
 
-### invalid usages
+### Incorrect usages
 
 #### missing mock
 ```
@@ -148,7 +148,7 @@ const { someFn } = someObject;
 
 jest.mock('some-absolute-path');
 
-const someFnMock = jest.mocked(someFn)'
+const someFnMock = jest.mocked(someFn)';
 ```
 
 ## Configuration

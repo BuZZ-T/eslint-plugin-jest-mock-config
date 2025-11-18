@@ -11,9 +11,8 @@ module.exports = {
         type: 'problem',
         docs: {
             description: 'disallows jest.mock() calls with the same path more than once',
-            category: '',
             recommended: true,
-            url: '',
+            url: 'https://github.com/BuZZ-T/eslint-plugin-jest-mock-config/blob/main/docs/rules/jest-mock-multiple-with-same-path.md',
         },
         messages: {
             jestMockUsedMoreThanOnce: 'jest.mock(\'{{path}}\') is used more than once',

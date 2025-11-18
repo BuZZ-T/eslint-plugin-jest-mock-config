@@ -40,6 +40,17 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
         },
         {
             code: `const { something } = require('some-path');
+                   const { somethingElse } = require('some-other-path');
+                   jest.mock('some-path');
+                   const somethingMock = jest.mocked(something);
+                   // some comment
+                   jest.mock('some-other-path');
+                   const somethingElseMock = jest.mocked(somethingElse);
+                   `,
+            name: 'jest.mock directly above jest.mocked two times',
+        },
+        {
+            code: `const { something } = require('some-path');
                    jest.mock('some-path');`,
             name: 'no jest.mocked',
         },
