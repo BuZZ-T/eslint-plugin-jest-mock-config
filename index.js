@@ -1,5 +1,5 @@
 /**
- * eslint-plugin-jest-mock-path - ESLint plugin for jest.mock() paths
+ * eslint-plugin-jest-mock-config - ESLint plugin for jest.mock() paths
  */
 
 'use strict';
