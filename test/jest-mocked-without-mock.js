@@ -58,7 +58,7 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
                  jest.mock('some-absolute-path');
 
                  const someFnMocked = jest.mocked(someFnLocal);`,
-          name: 'import with asterisk absolute path',
+          name: 'import namespace absolute path',
         },
         {
           code: `const { someFn } = require('some-absolute-path');
