@@ -125,6 +125,16 @@ jest.mock('some-package', () => { someFunction: jest.mock() });
 ['error', { ignoreMockWithFactory: true }]
 ```
 
+#### with configuration ignoreVirtual
+**code:**
+```
+jest.mock('some-package', () => { someFunction: jest.mock() }, { virtual: true });
+```
+**configuration:**
+```
+['error', { ignoreVirtual: true }]
+```
+
 ### Invalid usages
 
 #### absolute path without import
@@ -147,13 +157,18 @@ jest.mock('some-package', () => { someFunction: jest.fn() });
 
 ## Configuration
 
-There are multiple ways to exclude `jest.mock` calls:
+There are multiple ways to exclude `jest.mock` calls.
 
-| Configuration | Type | Consequence | Reasons to use
-| - | - | - | -
+This might be useful / necessary when:
+* using a factory for mocking without the need to override it
+* using an external mock file like `__mocks__/<file-to-mock>` without the need to override it
+
+| Configuration | Type | Consequence
+| - | - | -
 | ignorePaths | string[] | Paths added to this array are ignored. So no linting error is thrown, even if this path is not imported into the test file but used in `jest.mock`
 | ignorePatterns | string[] / Regex Array | Basically the same as `ignorePaths`, but Regular Expressions (as string or Regex) can be used.
 | ignoreMockWithFactory | boolean | The second parameter of the `jest.mock()` function is a so called factory. It allows to directly specify the mock without using `.mockReturnValue`. If `ignoreMockWithFactory` is set to `true`, `jest.mock()` calls with a factory set, are not checked.
+| ignoreVirtual | boolean | The third parameter of `jest.mock()` allows to pass options. `virtual` allows mocking of modules, which don't exist in the system. This might be useful for native modules (like e.g. react-native has).
 
 ### Example
 

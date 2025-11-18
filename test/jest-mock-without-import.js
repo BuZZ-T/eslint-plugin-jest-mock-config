@@ -85,6 +85,10 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
             code: `jest.mock('../some/relative/path/to/ignore', factory);`,
             options: [{ ignoreMockWithFactory: true }],
         },
+        {
+            code: `jest.mock('some-path-to-ignore', () => { someFn: jest.fn()}, { virtual: true });`,
+            options: [{ ignoreVirtual: true }],
+        },
     ],
     invalid: [
         {
@@ -116,6 +120,15 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
         {
             code: `jest.mock('../some/relative/path', factory);`,
             errors: [{ message: 'jest.mock() path "../some/relative/path" is not imported' }],
+        },
+        {
+            code: `jest.mock('some-absolute-path', () => { someFn: jest.fn()}, { virtual: true });`,
+            errors: [ { message: 'jest.mock() path "some-absolute-path" is not imported'}],
+        },
+        {
+            code: `jest.mock('some-absolute-path', () => { someFn: jest.fn()}, { virtual: false });`,
+            options: [{ ignoreVirtual: true }],
+            errors: [ { message: 'jest.mock() path "some-absolute-path" is not imported'}],
         },
     ]
 });
