@@ -56,6 +56,36 @@ npm install --safe-dev eslint-plugin-jest-mock-path
 yarn add --dev eslint-plugin-jest-mock-path
 ```
 
+## Configuration
+
+### ignore
+
+#### Type
+Array of strings
+
+#### Consequence
+Paths added to this array are ignored. So no linting error is thrown, even if this path is not imported into the test file but used in `jest.mock`.
+
+#### Reason to use
+If you are directly adding the mock of the mocked file in the `jest.mock` call. E.g.:
+```js
+jest.mock('/some/path`, () => ({ someFunction: () => { ... } }))
+```
+Then probably no `.mockReturnValue` / `.mockResolvedValue` / etc. is needed for this mock and the rule can ignore this call.
+
+#### Attention
+The path of this mock is not covered by this rule so renaming and refactoring may lead this test to break!
+
+#### Example  (.eslintrc.js):
+```
+'detect-jest-mock-without-import': ['error', {ignore: ['path-to-ignore']}],
+```
+
+#### Additional note
+Of cource this works for absolute and relative paths. Decide on your own, if ignoring relative paths is useful!
+
+
+
 ## Development
 
 ### Tests
@@ -67,8 +97,12 @@ npm test
 
 ### When to use the plugin
 
-If you are using [jest](https://www.npmjs.com/package/jest) with JavaScript or TypeScipt for your tests
+* If you are using [jest](https://www.npmjs.com/package/jest) with JavaScript or TypeScipt for your tests with `.mockReturnValue` / `.mockResolvedValue` / etc.
 
-## When to not use the plugin
+### When to not use the plugin
 
-If you are not using [jest](https://www.npmjs.com/package/jest) in your project
+* If you are not using [jest](https://www.npmjs.com/package/jest) in your project
+* If you are **ONLY** using jest without `.mockReturnValue` / `.mockResolvedValue` / etc. and just mocking the import of the file in `jest.mock` as second parameter, e.g.:
+```js
+jest.mock('/some/path`, () => ({ someFunction: () => { ... } }))
+```
