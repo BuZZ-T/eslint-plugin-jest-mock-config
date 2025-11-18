@@ -1,0 +1,24 @@
+{
+  "name": "eslint-plugin-jest-mock-path",
+  "version": "1.0.0",
+  "description": "Rules for paths in jest.mock(...)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BuZZ-T/eslint-plugin-jest-mock-path.git"
+  },
+  "keywords": [
+    "eslint",
+    "jest",
+    "mock"
+  ],
+  "author": "Bastian Gebhardt <buzz-t@buzz-t.eu>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BuZZ-T/eslint-plugin-jest-mock-path/issues"
+  },
+  "homepage": "https://github.com/BuZZ-T/eslint-plugin-jest-mock-path#readme"
+}
