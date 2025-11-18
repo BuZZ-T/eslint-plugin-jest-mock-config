@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.0-beta-8
+* add rules
+  * jest-mock-grouped
+  * jest-mocked-grouped
+* add additional examples (aka integration tests)
+  * recommended for eslint 7/8/9
+  * grouped examples
+* minor improvements/fixes
+
 ## 1.0.0-beta.7
 * add `jest-mock-directly-above-jest-mocked` rule
 
