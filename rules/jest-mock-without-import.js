@@ -77,8 +77,8 @@ module.exports = {
                     return;
                 }
 
-                // eslint8 / eslint9 compatibility
-                const ancestors = sourceCode.getAncestors
+                // eslint7 / eslint8 / eslint9 compatibility
+                const ancestors = sourceCode?.getAncestors
                     ? sourceCode.getAncestors(node)
                     : context.getAncestors();
                 
