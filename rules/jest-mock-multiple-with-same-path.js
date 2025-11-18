@@ -17,7 +17,7 @@ module.exports = {
             url: '',
         },
         messages: {
-            jestMockPathNotImported: 'jest.mock() path "{{path}}" is used more than once',
+            jestMockPathNotImported: 'jest.mock(\'{{path}}\') is used more than once',
         },
         schema: [],
     },
