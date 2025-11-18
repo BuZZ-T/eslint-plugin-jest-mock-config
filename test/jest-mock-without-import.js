@@ -8,7 +8,7 @@ const tester = new RuleTester({
   },
 });
 
-const ruleName = 'detect-jest-mock-without-import';
+const ruleName = 'jest-mock-without-import';
 
 tester.run(ruleName, require(`../rules/${ruleName}`), {
     valid: [
