@@ -77,8 +77,6 @@ module.exports = {
                 const ancestors = sourceCode?.getAncestors
                     ? sourceCode.getAncestors(node)
                     : context.getAncestors();
-                
-                // this only works, when imports are on top level!
                 const program = ancestors[0];
 
                 const importPaths = getImportPaths(program);

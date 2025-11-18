@@ -151,5 +151,16 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
           errors: ["jest.mocked(someFnLocal), but it's import path is not found. Be sure to directly import it, or use \"follow: true\""],
           name: 'no direct import without follow',
         },
+        {
+          code: `const someFn = require('some-absolute-path');
+                 const someFnLocal = someObject.someFn;
+  
+                 jest.mock('some-absolute-path');
+  
+                 const someFnMocked = jest.mocked(someFnLocal);`,
+          errors: ["jest.mocked(someFnLocal), but it's import path is not found. Be sure to directly import it"],
+          options: [{ follow: true }],
+          name: 'no direct import with follow',
+        },
     ]
 });

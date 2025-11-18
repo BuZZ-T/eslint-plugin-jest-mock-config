@@ -1,5 +1,4 @@
 /**
- * 
  * @author Bastian Gebhardt<buzz-t@buzz-t.eu>
  */
 
@@ -17,7 +16,7 @@ module.exports = {
             url: '',
         },
         messages: {
-            jestMockPathNotImported: 'jest.mock(\'{{path}}\') is used more than once',
+            jestMockUsedMoreThanOnce: 'jest.mock(\'{{path}}\') is used more than once',
         },
         schema: [],
     },
@@ -45,7 +44,7 @@ module.exports = {
                 if (pathAmount > 1) {
                     context.report({
                         node,
-                        messageId: 'jestMockPathNotImported',
+                        messageId: 'jestMockUsedMoreThanOnce',
                         data: {
                             path: jestMockCallPath,
                         },

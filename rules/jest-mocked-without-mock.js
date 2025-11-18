@@ -1,5 +1,4 @@
 /**
- * 
  * @author Bastian Gebhardt<buzz-t@buzz-t.eu>
  */
 
@@ -18,8 +17,8 @@ module.exports = {
         },
         messages: {
             jestMockPathNotImported: `jest.mocked({{mockedCallSource}}), but it's import path "{{mockedImportPath}}" is not mocked with jest.mock()`,
-            jestMockedPathNotImported: `jest.mocked({{mockedCallSource}}), but it's import path is not found. Be sure to directly import it, or use "follow: true"`
-
+            jestMockedPathNotImportedUseFollow: `jest.mocked({{mockedCallSource}}), but it's import path is not found. Be sure to directly import it, or use "follow: true"`,
+            jestMockedPathNotImported: `jest.mocked({{mockedCallSource}}), but it's import path is not found. Be sure to directly import it`
         },
         schema: [
             {
@@ -52,11 +51,8 @@ module.exports = {
                 const ancestors = sourceCode?.getAncestors
                     ? sourceCode.getAncestors(node)
                     : context.getAncestors();
-                
-                // this only works, when imports are on top level!
                 const program = ancestors[0];
 
-                // key-value: imported value => import path
                 const imports = getImports(program);
 
                 // import path of the source, which is passed to jest.mocked
@@ -69,7 +65,7 @@ module.exports = {
                         data: {
                             mockedCallSource,
                         },
-                        messageId: 'jestMockedPathNotImported',
+                        messageId: 'jestMockedPathNotImportedUseFollow',
                     });
                     return;
                 }
@@ -77,6 +73,17 @@ module.exports = {
                 if (!mockedImportPath && doFollow) {
                     const vars = getVariables(program);
                     mockedImportPath = follow(imports, vars, mockedCallSource);
+                }
+
+                if(!mockedImportPath) {
+                    context.report({
+                        node,
+                        data: {
+                            mockedCallSource,
+                        },
+                        messageId: 'jestMockedPathNotImported',
+                    });
+                    return;
                 }
 
                 // array of paths, for which jest.mock is called

@@ -1,3 +1,6 @@
+/**
+ * Extracts the path, if the given node is a jest.mock call
+ */
 module.exports.extractJestMockCallPath = function extractJestMockCallPath(node) {
     if (node.callee?.object?.name === 'jest' && node.callee?.property?.name === 'mock') {
         return node.arguments?.[0].value;
@@ -6,14 +9,10 @@ module.exports.extractJestMockCallPath = function extractJestMockCallPath(node) 
     return undefined;
 };
 
-module.exports.extractJestMockedCallSource = function extractJestMockCallPath(node) {
-    if (node.callee?.object?.name === 'jest' && node.callee?.property?.name === 'mocked') {
-        return node.arguments?.[0].value;
-    } 
-    
-    return undefined;
-};
-
+/**
+ * Extracts all import paths from the given program
+ * Regards both import and require statements
+ */
 module.exports.getImportPaths = function getImportPaths(program) {
     const imports = program.body
         .filter((entry) => entry.type === 'ImportDeclaration')
@@ -28,6 +27,10 @@ module.exports.getImportPaths = function getImportPaths(program) {
     return [...imports, ...requires];
 };
 
+/**
+ * Extract all imports from the given program
+ * Returns an key-value pair: imported value => import path
+ */
 module.exports.getImports = function getImports(program) {
     const imports = program.body
         .filter((entry) => entry.type === 'ImportDeclaration')
@@ -66,6 +69,9 @@ module.exports.getImports = function getImports(program) {
     return requiresAndImports;
 };
 
+/**
+ * Extracts all paths of jest.mock expressions
+ */
 module.exports.getMockPaths = function(programm) {
     return programm.body.filter(entry => 
         entry.type === 'ExpressionStatement'
@@ -95,6 +101,9 @@ module.exports.getVariables = function(program) {
     return variables;
 };
 
+/**
+ * Takes the variable name and follows it through the variable declarations to the import path
+ */
 module.exports.follow = function follow(imports, variables, variable) {
     if (!variable) {
         return undefined;
