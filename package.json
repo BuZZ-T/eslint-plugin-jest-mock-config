@@ -7,6 +7,16 @@
     "test": "mocha test/**/*",
     "lint": "eslint ."
   },
+  "workspaces": [
+    "examples/eslint7",
+    "examples/eslint7-recommended",
+    "examples/eslint8",
+    "examples/eslint8-recommended",
+    "examples/eslint9",
+    "examples/eslint9-recommended",
+    "examples/eslint10",
+    "examples/eslint10-recommended"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/BuZZ-T/eslint-plugin-jest-mock-config.git"
