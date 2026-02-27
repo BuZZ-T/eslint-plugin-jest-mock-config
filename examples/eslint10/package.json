@@ -12,6 +12,6 @@
   "devDependencies": {
     "eslint": "^10.0.2",
     "eslint-plugin-jest-mock-config": "file:../../",
-    "jest": "^29.7.0"
+    "jest": "^30.2.0"
   }
 }
