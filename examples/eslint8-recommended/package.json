@@ -9,7 +9,7 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
+  "devDependencies": {
     "eslint": "^8.57.0",
     "eslint-plugin-jest-mock-config": "file:../../",
     "jest": "^29.7.0"
