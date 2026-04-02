@@ -47,9 +47,9 @@ If you are using [jest](https://www.npmjs.com/package/jest) with JavaScript or T
 If you are not using [jest](https://www.npmjs.com/package/jest) in your project
 
 
-## ESLint7 /  8 / 9 compatibility
+## ESLint7 /  8 / 9 / 10 compatibility
 
-Rules included in this ESLint plugin are tested with Version 7 / 8 and 9 of ESLint.
-See the [github actions](https://github.com/BuZZ-T/eslint-plugin-jest-mock-config/actions) testing all rules for eslint7, 8 and 9 and the related (stub-) projects localed in [examples](https://github.com/BuZZ-T/eslint-plugin-jest-mock-config/tree/main/examples).
+Rules included in this ESLint plugin are tested with Version 7 / 8, 9 and 10 of ESLint.
+See the [github actions](https://github.com/BuZZ-T/eslint-plugin-jest-mock-config/actions) testing all rules for eslint7, 8, 9 and 10 and the related (stub-) projects localed in [examples](https://github.com/BuZZ-T/eslint-plugin-jest-mock-config/tree/main/examples).
 
 Please report bugs [here](https://github.com/BuZZ-T/eslint-plugin-jest-mock-config/issues), if you still encounter some!
