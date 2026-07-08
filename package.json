@@ -39,5 +39,8 @@
   },
   "peerDependencies": {
     "eslint": ">=7.0.0"
+  },
+  "volta": {
+    "node": "26.4.0"
   }
 }
