@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.0.0
+
+* added examples as workspaces
+* update README.md regarding eslint10 examples
+* fixed some security vulnerabilities
+* added node@26 (via volta in package.json)
+* released the project
+
+## 1.0.0-beta-11
+
+* upgraded several packages to fix vulnerabilities
+* added eslint10 to examples
+* made jest and eslint devDependencies in examples
+
 ## 1.0.0-beta-10
 * add missing case for `jest-mock-directly-above-jest-mocked`
 * apply security patches to main project and examples
