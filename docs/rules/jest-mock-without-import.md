@@ -173,7 +173,7 @@ This might be useful / necessary when:
 ### Example
 
 ```js
-'jest-mock-path/detect-jest-mock-without-import': ['error', {
+'jest-mock-without-import': ['error', {
   ignorePaths: ['some-path'],
   ignorePatterns: ['pattern-as-string', /pattern-as-regex/],
   ignoreMockWithFactory: true

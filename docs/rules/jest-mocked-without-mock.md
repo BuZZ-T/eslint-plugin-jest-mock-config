@@ -164,3 +164,11 @@ Be aware:
 
 * this might affect the performance of the linting process if you have many and large test files.
 * this is an **experimental** option, probably not all relevant cases are covered. Report bugs!
+
+### Example
+
+```js
+'jest-mocked-without-mock': ['error', {
+  follow: true,
+}],
+```
