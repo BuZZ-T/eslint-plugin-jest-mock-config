@@ -32,12 +32,21 @@ module.exports = {
 
                 const previousStatement = getPreviousSibling(node.parent);
 
+                // eslint7 / eslint8 / eslint9 compatibility
+                const ancestors = sourceCode?.getAncestors
+                    ? sourceCode.getAncestors(node)
+                    : context.getAncestors();
+                const program = ancestors[0];
+                
+                const imports = getImports(program);
+
                 if (previousStatement?.type === 'VariableDeclaration'
                     && previousStatement?.declarations.some(declaration => isJestMockedCall(declaration)
-                    && declaration.init?.arguments[0]?.name === node.init.arguments[0]?.name)) {
+                    && !!imports[declaration.init?.arguments[0]?.name]
+                    && imports[declaration.init?.arguments[0]?.name] === imports[node.init.arguments[0]?.name])) {
                     return;
                 }
-                
+
                 if (previousStatement?.type !== 'ExpressionStatement') {
                     context.report({
                         node,
@@ -62,14 +71,6 @@ module.exports = {
                 const previousJestMockPath = previousStatement.expression.arguments[0].value;
 
                 const mockedCallSource = node.init.arguments[0].name;
-
-                // eslint7 / eslint8 / eslint9 compatibility
-                const ancestors = sourceCode?.getAncestors
-                    ? sourceCode.getAncestors(node)
-                    : context.getAncestors();
-                const program = ancestors[0];
-                
-                const imports = getImports(program);
 
                 const importMockPath = imports[mockedCallSource];
 

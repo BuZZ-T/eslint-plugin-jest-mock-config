@@ -55,10 +55,10 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
             name: 'no jest.mocked',
         },
         {
-            code: `import { something } from 'some-path';
+            code: `import { something, somethingElse } from 'some-path';
                    jest.mock('some-path');
                    const somethingMock = jest.mocked(something);
-                   const somethingElseMock = jest.mocked(something);`,
+                   const somethingElseMock = jest.mocked(somethingElse);`,
             name: 'multiple jest.mocked calls with same import',
         },
     ],
@@ -88,9 +88,9 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
             errors: ['Can\'t resolve jest.mocked(something) to import' ],
         },
         {
-            code: `import { something } from 'some-path';
+            code: `import { something, somethingElse } from 'some-path';
                    const somethingMock = jest.mocked(something);
-                   const somethingElseMock = jest.mocked(something);`,
+                   const somethingElseMock = jest.mocked(somethingElse);`,
             name: 'multiple jest.mocked calls with same import',
             errors: ['jest.mock should be directly above jest.mocked']
         },
