@@ -47,8 +47,8 @@ module.exports = {
                     return;
                 }
 
-                const objectName = previousStatement.expression.callee.object.name;
-                const propertyName = previousStatement.expression.callee.property.name;
+                const objectName = previousStatement.expression.callee?.object.name;
+                const propertyName = previousStatement.expression.callee?.property.name;
 
                 if (objectName !== 'jest' || propertyName !== 'mock') {
                     context.report({

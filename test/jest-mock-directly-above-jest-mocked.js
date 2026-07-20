@@ -94,5 +94,14 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
             name: 'multiple jest.mocked calls with same import',
             errors: ['jest.mock should be directly above jest.mocked']
         },
+        {
+            code: `import { something } from 'some-path';
+                   
+                   GlobalObject.prototype.somethingElse = jest.fn();
+        
+                   const somethingMock = jest.mocked(something);`,
+            name: 'global object prototype jest.fn() directly above jest.mocked',
+            errors: ['jest.mock should be directly above jest.mocked']
+        }
     ]
 });
