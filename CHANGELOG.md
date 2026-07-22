@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.1
+
+* added example in documentation, fixed wrong rule name in documentation
+* fixed two missing/wrong cases in `jest-mock-directly-above-jest-mocked`
+
 ## 1.0.0
 
 * added examples as workspaces
