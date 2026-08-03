@@ -4,7 +4,7 @@
 
 'use strict';
 
-const { getMockPaths, extractJestMockCallPath } = require('../utils/utils');
+const { getMockPaths, extractJestMockCallPath, getMockObjects } = require('../utils/utils');
 
 module.exports = {
     meta: {
@@ -17,14 +17,32 @@ module.exports = {
         messages: {
             jestMockUsedMoreThanOnce: 'jest.mock(\'{{path}}\') is used more than once',
         },
-        schema: [],
+        schema: [
+            {
+                type: 'object',
+                properties: {
+                    mockObject: {
+                        oneOf: [
+                            { type: 'string' },
+                            {
+                                type: 'array',
+                                items: { type: 'string' },
+                            },
+                        ],
+                    },
+                },
+                additionalProperties: false,
+            },
+        ],
     },
     create: function(context) {
         const { sourceCode } = context;
 
+        const mockObjects = getMockObjects(context);
+
         return {
             CallExpression: function(node) {
-                const jestMockCallPath = extractJestMockCallPath(node);
+                const jestMockCallPath = extractJestMockCallPath(node, mockObjects);
 
                 if (!jestMockCallPath) {
                     return;
@@ -36,7 +54,7 @@ module.exports = {
                     : context.getAncestors();
                 const program = ancestors[0];
 
-                const mockPaths = getMockPaths(program);
+                const mockPaths = getMockPaths(program, mockObjects);
 
                 const pathAmount = mockPaths.filter((path) => path === jestMockCallPath).length;
 

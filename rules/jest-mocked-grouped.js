@@ -4,6 +4,8 @@
 
 'use strict';
 
+const { getMockObjects } = require('../utils/utils');
+
 module.exports = {
     meta: {
         type: 'layout',
@@ -15,15 +17,32 @@ module.exports = {
         messages: {
             jestMockedShouldFollow: 'jest.mocked should directly follow another jest.mocked',
         },
-        schema: [],
+        schema: [
+            {
+                type: 'object',
+                properties: {
+                    mockObject: {
+                        oneOf: [
+                            { type: 'string' },
+                            {
+                                type: 'array',
+                                items: { type: 'string' },
+                            },
+                        ],
+                    },
+                },
+                additionalProperties: false,
+            },
+        ],
     },
     create: function(context) {
+        const mockObjects = getMockObjects(context);
 
         return {
             Program: function(program) {
                 const mockedStatements = program.body.filter((node) => node.type === 'VariableDeclaration'
                     && node.declarations[0].init?.type === 'CallExpression'
-                    && node.declarations[0].init.callee?.object?.name === 'jest'
+                    && mockObjects.includes(node.declarations[0].init.callee?.object?.name)
                     && node.declarations[0].init.callee?.property?.name === 'mocked');
 
                 const positions = mockedStatements.map((mock) => program.body.indexOf(mock));
