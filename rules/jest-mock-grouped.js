@@ -4,7 +4,7 @@
 
 'use strict';
 
-const { getMocks } = require('../utils/utils');
+const { getMocks, getMockObjects } = require('../utils/utils');
 
 module.exports = {
     meta: {
@@ -17,13 +17,30 @@ module.exports = {
         messages: {
             jestMockShouldFollow: 'jest.mock should directly follow another jest.mock',
         },
-        schema: [],
+        schema: [
+            {
+                type: 'object',
+                properties: {
+                    mockObject: {
+                        oneOf: [
+                            { type: 'string' },
+                            {
+                                type: 'array',
+                                items: { type: 'string' },
+                            },
+                        ],
+                    },
+                },
+                additionalProperties: false,
+            },
+        ],
     },
     create: function(context) {
+        const mockObjects = getMockObjects(context);
 
         return {
             Program: function(program) {
-                const mocks = getMocks(program);
+                const mocks = getMocks(program, mockObjects);
 
                 const positions = mocks.map((mock) => program.body.indexOf(mock));
                 

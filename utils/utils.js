@@ -1,8 +1,22 @@
 /**
- * Extracts the path, if the given node is a jest.mock call
+ * Returns the configured mock object name(s) (e.g. `jest` and/or `vi`).
+ * Reads the `mockObject` option from the rule options. Defaults to `['jest']`.
  */
-module.exports.extractJestMockCallPath = function extractJestMockCallPath(node) {
-    if (node.callee?.object?.name === 'jest' && node.callee?.property?.name === 'mock') {
+module.exports.getMockObjects = function getMockObjects(context) {
+    const configured = context?.options?.[0]?.mockObject;
+
+    const list = Array.isArray(configured)
+        ? configured
+        : (configured ? [configured] : []);
+
+    return list.length ? list : ['jest'];
+};
+
+/**
+ * Extracts the path, if the given node is a jest.mock / vi.mock call
+ */
+module.exports.extractJestMockCallPath = function extractJestMockCallPath(node, mockObjects) {
+    if (mockObjects.includes(node.callee?.object?.name) && node.callee?.property?.name === 'mock') {
         return node.arguments?.[0].value;
     } 
     
@@ -70,22 +84,22 @@ module.exports.getImports = function getImports(program) {
 };
 
 /**
- * Extracts all jest.mock calls from the given program
+ * Extracts all jest.mock / vi.mock calls from the given program
  */
-function getMocks(program) {
+function getMocks(program, mockObjects) {
     return program.body.filter(entry => 
         entry.type === 'ExpressionStatement'
-        && entry.expression.callee?.object?.name === 'jest'
+        && mockObjects.includes(entry.expression.callee?.object?.name)
         && entry.expression.callee?.property?.name === 'mock'
     );
 };
 module.exports.getMocks = getMocks;
 
 /**
- * Extracts all paths of jest.mock expressions
+ * Extracts all paths of jest.mock / vi.mock expressions
  */
-module.exports.getMockPaths = function(program) {
-    return getMocks(program)
+module.exports.getMockPaths = function(program, mockObjects) {
+    return getMocks(program, mockObjects)
         .map(entry => entry.expression.arguments[0].value);
 };
 
@@ -147,8 +161,8 @@ module.exports.getPreviousSibling = function getPreviousSibling(node) {
     return parent.body[index - 1 ?? -1];
 };
 
-module.exports.isJestMockedCall = function isJestMockedCall(node) {
+module.exports.isJestMockedCall = function isJestMockedCall(node, mockObjects) {
     return node.init?.type === 'CallExpression'
-        && node.init.callee?.object?.name === 'jest'
+        && mockObjects.includes(node.init.callee?.object?.name)
         && node.init.callee?.property?.name === 'mocked';
 };

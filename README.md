@@ -46,6 +46,41 @@ If you are using [jest](https://www.npmjs.com/package/jest) with JavaScript or T
 
 If you are not using [jest](https://www.npmjs.com/package/jest) in your project
 
+## Vitest support
+
+All rules also work with [vitest](https://vitest.dev/), which uses `vi.mock()` and `vi.mocked()` instead of the `jest.*` equivalents.
+
+By default every rule only looks for `jest`. Set the `mockObject` option to make a rule match `vi` (or both) instead:
+
+```js
+// eslint.config.js
+'use strict';
+
+module.exports = [
+    {
+        files: ['**/*.test.js', '**/*.test.ts'],
+        plugins: {
+            'jest-mock-config': require('eslint-plugin-jest-mock-config'),
+        },
+        rules: {
+            // match vi.mock() / vi.mocked() instead of jest.mock() / jest.mocked()
+            'jest-mock-config/jest-mock-without-import': ['error', { mockObject: 'vi' }],
+            'jest-mock-config/jest-mocked-without-mock': ['error', { mockObject: 'vi' }],
+            'jest-mock-config/jest-mock-multiple-with-same-path': ['error', { mockObject: 'vi' }],
+        },
+    },
+];
+```
+
+`mockObject` accepts either a single string or an array of strings, so a project can use both test frameworks in parallel:
+
+```js
+rules: {
+    'jest-mock-config/jest-mock-without-import': ['error', { mockObject: ['jest', 'vi'] }],
+}
+```
+
+When omitted, `mockObject` defaults to `['jest']`, preserving the existing behavior.
 
 ## ESLint7 /  8 / 9 / 10 compatibility
 

@@ -4,7 +4,7 @@
 
 'use strict';
 
-const { getPreviousSibling, getImports, isJestMockedCall } = require("../utils/utils");
+const { getPreviousSibling, getImports, isJestMockedCall, getMockObjects } = require("../utils/utils");
 
 module.exports = {
     meta: {
@@ -19,14 +19,31 @@ module.exports = {
             cantResolveToImport: 'Can\'t resolve jest.mocked({{mockObject}}) to import',
             wrongJestMockPath: 'jest.mock path does not match jest.mocked path',
         },
-        schema: [],
+        schema: [
+            {
+                type: 'object',
+                properties: {
+                    mockObject: {
+                        oneOf: [
+                            { type: 'string' },
+                            {
+                                type: 'array',
+                                items: { type: 'string' },
+                            },
+                        ],
+                    },
+                },
+                additionalProperties: false,
+            },
+        ],
     },
     create: function(context) {
         const { sourceCode } = context;
+        const mockObjects = getMockObjects(context);
 
         return {
             VariableDeclarator: function(node) {
-                if (!isJestMockedCall(node)) {
+                if (!isJestMockedCall(node, mockObjects)) {
                     return;
                 }
 
@@ -41,7 +58,7 @@ module.exports = {
                 const imports = getImports(program);
 
                 if (previousStatement?.type === 'VariableDeclaration'
-                    && previousStatement?.declarations.some(declaration => isJestMockedCall(declaration)
+                    && previousStatement?.declarations.some(declaration => isJestMockedCall(declaration, mockObjects)
                     && !!imports[declaration.init?.arguments[0]?.name]
                     && imports[declaration.init?.arguments[0]?.name] === imports[node.init.arguments[0]?.name])) {
                     return;
@@ -59,7 +76,7 @@ module.exports = {
                 const objectName = previousStatement.expression.callee?.object.name;
                 const propertyName = previousStatement.expression.callee?.property.name;
 
-                if (objectName !== 'jest' || propertyName !== 'mock') {
+                if (!mockObjects.includes(objectName) || propertyName !== 'mock') {
                     context.report({
                         node,
                         messageId: 'noJestMockAbove',
