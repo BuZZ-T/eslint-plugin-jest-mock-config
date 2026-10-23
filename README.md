@@ -3,7 +3,7 @@
 [![NPM Version](https://img.shields.io/npm/v/eslint-plugin-jest-mock-config.svg)](https://www.npmjs.com/package/eslint-plugin-jest-mock-config) [![Package License](https://img.shields.io/npm/l/eslint-plugin-jest-mock-config.svg)](https://www.npmjs.com/package/eslint-plugin-jest-mock-config) [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/BuZZ-T/eslint-plugin-jest-mock-config/test.yml?branch=main)](https://img.shields.io/github/actions/workflow/status/BuZZ-T/eslint-plugin-jest-mock-config/test.yml?branch=main)
 
 
-ESLint rules for mocking in `jest` using `jest.mock(...)`.
+ESLint rules for mocking in `jest` using `jest.mock(...)` or `vitest` using `vi.mock(...)`.
 ## Rules
 
 This Plugin currently contains the following ESLint rules:
@@ -40,11 +40,11 @@ npm test
 
 ### When to use the plugin
 
-If you are using [jest](https://www.npmjs.com/package/jest) with JavaScript or TypeScipt for your tests and want to detect wrong configurations of your jest mocks.
+If you are using [jest](https://www.npmjs.com/package/jest) or [vitest](https://www.npmjs.com/package/vitest) with JavaScript or TypeScipt for your tests and want to detect wrong configurations of your mocks.
 
 ### When to not use the plugin
 
-If you are not using [jest](https://www.npmjs.com/package/jest) in your project
+If you are not using [jest](https://www.npmjs.com/package/jest) or [vitest](https://www.npmjs.com/package/vitest) in your project
 
 ## Vitest support
 
