@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2
+
+* only upgrading packages to fix security vulnerabilites
+
 ## 1.0.1
 
 * added example in documentation, fixed wrong rule name in documentation
