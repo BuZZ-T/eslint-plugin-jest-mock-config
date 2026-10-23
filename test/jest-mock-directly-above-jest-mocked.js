@@ -10,6 +10,8 @@ const tester = new RuleTester({
 
 const ruleName = 'jest-mock-directly-above-jest-mocked';
 
+const mockObjectVi = [{ mockObject: ['vi'] }];
+
 tester.run(ruleName, require(`../rules/${ruleName}`), {
     valid: [
         {
@@ -61,6 +63,13 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
                    const somethingElseMock = jest.mocked(somethingElse);`,
             name: 'multiple jest.mocked calls with same import',
         },
+        {
+            code: `import { something } from 'some-absolute-path';
+                   vi.mock('some-absolute-path');
+                   const mock = vi.mocked(something);`,
+            options: mockObjectVi,
+            name: 'vi.mock directly above vi.mocked',
+        },
     ],
     invalid: [
         {
@@ -102,6 +111,15 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
                    const somethingMock = jest.mocked(something);`,
             name: 'global object prototype jest.fn() directly above jest.mocked',
             errors: ['jest.mock should be directly above jest.mocked']
-        }
+        },
+        {
+            code: `import { something } from 'some-absolute-path';
+                   vi.mock('some-absolute-path');
+                   const x = something;
+                   const mock = vi.mocked(something);`,
+            options: mockObjectVi,
+            errors: [{ message: 'jest.mock should be directly above jest.mocked' }],
+            name: 'vi.mock not directly above vi.mocked',
+        },
     ]
 });

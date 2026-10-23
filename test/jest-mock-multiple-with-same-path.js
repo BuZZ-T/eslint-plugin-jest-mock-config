@@ -10,6 +10,8 @@ const tester = new RuleTester({
 
 const ruleName = 'jest-mock-multiple-with-same-path';
 
+const mockObjectVi = [{ mockObject: ['vi'] }];
+
 tester.run(ruleName, require(`../rules/${ruleName}`), {
     valid: [
         {
@@ -39,6 +41,12 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
                    import { somethingElse } from '../path/to/other/file';
                    jest.mock('../path/to/file');
                    jest.mock('../path/to/other/file');`,
+        },
+        {
+            code: `import { something } from 'some-absolute-path';
+                   vi.mock('some-absolute-path');`,
+            options: mockObjectVi,
+            name: 'single vi.mock',
         },
     ],
     invalid: [
@@ -89,6 +97,16 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
                 'jest.mock(\'some-absolute-path\') is used more than once',
                 'jest.mock(\'some-absolute-path\') is used more than once',
             ],
+        },
+        {
+            code: `vi.mock('some-absolute-path');
+                   vi.mock('some-absolute-path');`,
+            options: mockObjectVi,
+            errors: [
+                { message: 'jest.mock(\'some-absolute-path\') is used more than once' },
+                { message: 'jest.mock(\'some-absolute-path\') is used more than once' },
+            ],
+            name: 'duplicate vi.mock',
         },
     ],
 });

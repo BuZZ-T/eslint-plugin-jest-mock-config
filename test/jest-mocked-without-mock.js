@@ -10,6 +10,8 @@ const tester = new RuleTester({
 
 const ruleName = 'jest-mocked-without-mock';
 
+const mockObjectVi = [{ mockObject: ['vi'] }];
+
 tester.run(ruleName, require(`../rules/${ruleName}`), {
     valid: [
         {
@@ -120,7 +122,14 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
                  const someFnMocked = jest.mocked(someFnLocal);`,
           options: [{ follow: true }],
           name: 'require with renaming',
-        }
+        },
+        {
+            code: `import { something } from 'some-absolute-path';
+                   vi.mock('some-absolute-path');
+                   const mock = vi.mocked(something);`,
+            options: mockObjectVi,
+            name: 'vi.mocked with matching vi.mock',
+        },
       ],
       invalid: [
         {
@@ -161,6 +170,13 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
           errors: ["jest.mocked(someFnLocal), but it's import path is not found. Be sure to directly import it"],
           options: [{ follow: true }],
           name: 'no direct import with follow',
+        },
+        {
+            code: `import { something } from 'some-absolute-path';
+                   const mock = vi.mocked(something);`,
+            options: mockObjectVi,
+            errors: [{ message: 'jest.mocked(something), but it\'s import path "some-absolute-path" is not mocked with jest.mock()' }],
+            name: 'vi.mocked without vi.mock',
         },
     ]
 });

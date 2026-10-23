@@ -10,6 +10,8 @@ const tester = new RuleTester({
 
 const ruleName = 'jest-mock-grouped';
 
+const mockObjectVi = [{ mockObject: ['vi'] }];
+
 tester.run(ruleName, require(`../rules/${ruleName}`), {
     valid: [
         {
@@ -31,6 +33,12 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
             code: `jest.mock('some-path');
                    jest.mock('some-other-path');`,
         },
+        {
+            code: `vi.mock('a');
+                   vi.mock('b');`,
+            options: mockObjectVi,
+            name: 'grouped vi.mock',
+        },
     ],
     invalid: [
         {
@@ -47,6 +55,14 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
                    jest.mock('some-third-path');`,
             errors: [{ message: 'jest.mock should directly follow another jest.mock' }],
             name: 'two and one jest.mock with one statement line in between',
+        },
+        {
+            code: `vi.mock('a');
+                   const x = 1;
+                   vi.mock('b');`,
+            options: mockObjectVi,
+            errors: [{ message: 'jest.mock should directly follow another jest.mock' }],
+            name: 'ungrouped vi.mock',
         },
     ],
 });

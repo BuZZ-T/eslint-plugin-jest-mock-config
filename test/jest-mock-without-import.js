@@ -2,13 +2,15 @@
 
 const { RuleTester } = require('eslint');
 const tester = new RuleTester({
-  parserOptions: {
-    ecmaVersion: 6,
-    sourceType: 'module',
-  },
+    parserOptions: {
+        ecmaVersion: 6,
+        sourceType: 'module',
+    },
 });
 
 const ruleName = 'jest-mock-without-import';
+
+const mockObjectVi = [{ mockObject: ['vi'] }];
 
 tester.run(ruleName, require(`../rules/${ruleName}`), {
     valid: [
@@ -123,6 +125,35 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
             options: [{ ignoreVirtual: true }],
             name: 'ignore absolute path with virtual',
         },
+        {
+            code: `import { something } from 'some-absolute-path';
+                   vi.mock('some-absolute-path');`,
+            options: mockObjectVi,
+            name: 'vi.mock with matching import',
+        },
+        {
+            code: `vi.mock('some-absolute-path', () => ({ someFn: vi.fn() }));`,
+            options: mockObjectVi.map((o) => ({ ...o, ignoreMockWithFactory: true })),
+            name: 'vi.mock with factory ignored',
+        },
+        {
+            code: `import { something } from 'some-absolute-path';
+                   jest.mock('some-absolute-path');`,
+            name: 'default (jest) still only matches jest',
+        },
+        {
+            code: `vi.mock('some-absolute-path');`,
+            options: [{ mockObject: ['jest'] }],
+            name: 'vi.mock ignored when only jest configured',
+        },
+        {
+            code: `import { a } from 'a';
+                   import { b } from 'b';
+                   jest.mock('a');
+                   vi.mock('b');`,
+            options: [{ mockObject: ['jest', 'vi'] }],
+            name: 'jest and vi combined',
+        },
     ],
     invalid: [
         {
@@ -164,14 +195,26 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
         },
         {
             code: `jest.mock('some-absolute-path', () => ({ someFn: jest.fn()}), { virtual: true });`,
-            errors: [ { message: 'jest.mock() path "some-absolute-path" is not imported'}],
+            errors: [{ message: 'jest.mock() path "some-absolute-path" is not imported' }],
             name: 'missing absolute path with virtual',
         },
         {
             code: `jest.mock('some-absolute-path', () => ({ someFn: jest.fn()}), { virtual: false });`,
             options: [{ ignoreVirtual: true }],
-            errors: [ { message: 'jest.mock() path "some-absolute-path" is not imported'}],
+            errors: [{ message: 'jest.mock() path "some-absolute-path" is not imported' }],
             name: 'missing absolute path with virtual: false and ignoreVirtual',
+        },
+        {
+            code: `vi.mock('some-absolute-path');`,
+            options: mockObjectVi,
+            errors: [{ message: 'jest.mock() path "some-absolute-path" is not imported' }],
+            name: 'vi.mock with missing import',
+        },
+        {
+            code: `vi.mock('a');`,
+            options: [{ mockObject: ['jest', 'vi'] }],
+            errors: [{ message: 'jest.mock() path "a" is not imported' }],
+            name: 'vi flagged when combined',
         },
     ]
 });
