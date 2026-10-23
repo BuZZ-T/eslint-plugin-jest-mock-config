@@ -15,7 +15,7 @@ module.exports.getMockObjects = function getMockObjects(context) {
 /**
  * Extracts the path, if the given node is a jest.mock / vi.mock call
  */
-module.exports.extractJestMockCallPath = function extractJestMockCallPath(node, mockObjects) {
+module.exports.extractMockCallPath = function extractMockCallPath(node, mockObjects) {
     if (mockObjects.includes(node.callee?.object?.name) && node.callee?.property?.name === 'mock') {
         return node.arguments?.[0].value;
     } 

@@ -4,7 +4,7 @@
 
 'use strict';
 
-const { getMockPaths, extractJestMockCallPath, getMockObjects } = require('../utils/utils');
+const { getMockPaths, extractMockCallPath, getMockObjects } = require('../utils/utils');
 
 module.exports = {
     meta: {
@@ -42,7 +42,7 @@ module.exports = {
 
         return {
             CallExpression: function(node) {
-                const jestMockCallPath = extractJestMockCallPath(node, mockObjects);
+                const jestMockCallPath = extractMockCallPath(node, mockObjects);
 
                 if (!jestMockCallPath) {
                     return;
