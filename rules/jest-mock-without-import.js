@@ -5,7 +5,7 @@
 
 'use strict';
 
-const { extractJestMockCallPath, getImportPaths } = require('../utils/utils');
+const { extractJestMockCallPath, getImportPaths, getMockObjects } = require('../utils/utils');
 
 module.exports = {
     meta: {
@@ -22,6 +22,15 @@ module.exports = {
             {
                 type: 'object',
                 properties: {
+                    mockObject: {
+                        oneOf: [
+                            { type: 'string' },
+                            {
+                                type: 'array',
+                                items: { type: 'string' },
+                            },
+                        ],
+                    },
                     ignorePaths: {
                         type: 'array',
                         items: {
@@ -48,6 +57,7 @@ module.exports = {
     create: function(context) {
         const { sourceCode } = context;
 
+        const mockObjects = getMockObjects(context);
         const pathsToIgnore = context.options[0]?.ignorePaths || [];
         const patternsToIgnore = (context.options[0]?.ignorePatterns || []).map(pattern => typeof pattern === 'string' ? new RegExp(pattern) : pattern);
         const isIgnoreMockWithFactory = !!context.options[0]?.ignoreMockWithFactory;
@@ -55,7 +65,7 @@ module.exports = {
 
         return {
             CallExpression: function(node) {
-                const jestMockCallPath = extractJestMockCallPath(node);
+                const jestMockCallPath = extractJestMockCallPath(node, mockObjects);
 
                 if (!jestMockCallPath) {
                     return;

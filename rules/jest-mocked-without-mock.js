@@ -4,7 +4,7 @@
 
 'use strict';
 
-const { follow, getImports, getMockPaths, getVariables } = require('../utils/utils');
+const { follow, getImports, getMockPaths, getVariables, getMockObjects } = require('../utils/utils');
 
 module.exports = {
     meta: {
@@ -23,6 +23,15 @@ module.exports = {
             {
                 type: 'object',
                 properties: {
+                    mockObject: {
+                        oneOf: [
+                            { type: 'string' },
+                            {
+                                type: 'array',
+                                items: { type: 'string' },
+                            },
+                        ],
+                    },
                     follow: {
                         type: 'boolean',
                     },
@@ -34,11 +43,12 @@ module.exports = {
     create: function(context) {
         const { sourceCode } = context;
         const doFollow = !!context.options[0]?.follow;
+        const mockObjects = getMockObjects(context);
 
         return {
             VariableDeclarator: function(node) {
                 if (node.init?.type !== 'CallExpression'
-                    || node.init.callee?.object?.name !== 'jest'
+                    || !mockObjects.includes(node.init.callee?.object?.name)
                     || node.init.callee?.property?.name !== 'mocked') {
                     return;
                 }
@@ -85,8 +95,8 @@ module.exports = {
                     return;
                 }
 
-                // array of paths, for which jest.mock is called
-                const mockPaths = getMockPaths(program);
+                // array of paths, for which jest.mock / vi.mock is called
+                const mockPaths = getMockPaths(program, mockObjects);
 
                 const isImported = mockPaths.includes(mockedImportPath);
                 if (!isImported) {

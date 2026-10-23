@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+* added `mockObject` option to all rules, enabling the plugin to be used with vitest (`vi.mock(...)` / `vi.mocked(...)`)
+
 ## 1.0.2
 
 * only upgrading packages to fix security vulnerabilites
