@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.1.0
 
 * added `mockObject` option to all rules, enabling the plugin to be used with vitest (`vi.mock(...)` / `vi.mocked(...)`)
 
