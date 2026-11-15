@@ -11,6 +11,7 @@ const tester = new RuleTester({
 const ruleName = 'jest-mock-without-import';
 
 const mockObjectVi = [{ mockObject: ['vi'] }];
+const mockObjectBoth = [{ mockObject: ['jest', 'vi'] }];
 
 tester.run(ruleName, require(`../rules/${ruleName}`), {
     valid: [
@@ -151,7 +152,7 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
                    import { b } from 'b';
                    jest.mock('a');
                    vi.mock('b');`,
-            options: [{ mockObject: ['jest', 'vi'] }],
+            options: mockObjectBoth,
             name: 'jest and vi combined',
         },
     ],
@@ -211,8 +212,14 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
             name: 'vi.mock with missing import',
         },
         {
+            code: `vi.mock('some-absolute-path');`,
+            options: mockObjectBoth,
+            errors: [{ message: 'vi.mock() path "some-absolute-path" is not imported' }],
+            name: 'mixed jest.mock and vi.mock with missing import',
+        },
+        {
             code: `vi.mock('a');`,
-            options: [{ mockObject: ['jest', 'vi'] }],
+            options: mockObjectBoth,
             errors: [{ message: 'vi.mock() path "a" is not imported' }],
             name: 'vi flagged when combined',
         },

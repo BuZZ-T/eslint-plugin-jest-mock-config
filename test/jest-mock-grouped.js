@@ -11,6 +11,7 @@ const tester = new RuleTester({
 const ruleName = 'jest-mock-grouped';
 
 const mockObjectVi = [{ mockObject: ['vi'] }];
+const mockObjectBoth = [{ mockObject: ['jest', 'vi'] }];
 
 tester.run(ruleName, require(`../rules/${ruleName}`), {
     valid: [
@@ -38,6 +39,14 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
                    vi.mock('b');`,
             options: mockObjectVi,
             name: 'grouped vi.mock',
+        },
+        {
+            code: `jest.mock('a');
+                   jest.mock('b');
+                   vi.mock('c');
+                   vi.mock('d');`,
+            options: mockObjectBoth,
+            name: 'mixed grouped jest.mock and vi.mock',
         },
     ],
     invalid: [

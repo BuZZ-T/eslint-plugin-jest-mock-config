@@ -11,6 +11,7 @@ const tester = new RuleTester({
 const ruleName = 'jest-mocked-without-mock';
 
 const mockObjectVi = [{ mockObject: ['vi'] }];
+const mockObjectBoth = [{ mockObject: ['vi', 'jest'] }];
 
 tester.run(ruleName, require(`../rules/${ruleName}`), {
     valid: [
@@ -142,6 +143,16 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
           name: 'missing import path',
         },
         {
+          code: `import { someOtherFn } from 'some-other-absolute-path';
+          
+          vi.mock('some-absolute-path');
+          
+          const someFnNotMocked = vi.mocked(someOtherFn);`,
+          options: mockObjectVi,
+          errors: ['vi.mocked(someOtherFn), but it\'s import path "some-other-absolute-path" is not mocked with vi.mock()'],
+          name: 'missing import path for vi.mock',
+        },
+        {
           code: `const { someOtherFn } = require('some-other-absolute-path');
           
           jest.mock('some-absolute-path');
@@ -157,8 +168,19 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
                  jest.mock('some-absolute-path');
   
                  const someFnMocked = jest.mocked(someFnLocal);`,
-          errors: ["jest.mocked(someFnLocal), but it's import path is not found. Be sure to directly import it, or use \"follow: true\""],
-          name: 'no direct import without follow',
+                 errors: ["jest.mocked(someFnLocal), but it's import path is not found. Be sure to directly import it, or use \"follow: true\""],
+                 name: 'no direct import without follow',
+        },
+        {
+          code: `const someFn = require('some-absolute-path');
+                 const someFnLocal = someObject.someFn;
+                  
+                 vi.mock('some-absolute-path');
+                  
+                 const someFnMocked = vi.mocked(someFnLocal);`,
+          options: mockObjectBoth,
+          errors: ["vi.mocked(someFnLocal), but it's import path is not found. Be sure to directly import it, or use \"follow: true\""],
+          name: 'no direct import without follow for vi.mocked',
         },
         {
           code: `const someFn = require('some-absolute-path');
