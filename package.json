@@ -4,7 +4,7 @@
   "description": "Rules for paths in jest.mock(...)",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/**/*",
+    "test": "mocha",
     "lint": "eslint ."
   },
   "workspaces": [
