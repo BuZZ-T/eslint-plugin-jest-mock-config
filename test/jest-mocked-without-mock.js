@@ -175,7 +175,7 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
             code: `import { something } from 'some-absolute-path';
                    const mock = vi.mocked(something);`,
             options: mockObjectVi,
-            errors: [{ message: 'jest.mocked(something), but it\'s import path "some-absolute-path" is not mocked with jest.mock()' }],
+            errors: [{ message: 'vi.mocked(something), but it\'s import path "some-absolute-path" is not mocked with vi.mock()' }],
             name: 'vi.mocked without vi.mock',
         },
     ]

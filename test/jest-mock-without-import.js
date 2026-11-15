@@ -207,13 +207,13 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
         {
             code: `vi.mock('some-absolute-path');`,
             options: mockObjectVi,
-            errors: [{ message: 'jest.mock() path "some-absolute-path" is not imported' }],
+            errors: [{ message: 'vi.mock() path "some-absolute-path" is not imported' }],
             name: 'vi.mock with missing import',
         },
         {
             code: `vi.mock('a');`,
             options: [{ mockObject: ['jest', 'vi'] }],
-            errors: [{ message: 'jest.mock() path "a" is not imported' }],
+            errors: [{ message: 'vi.mock() path "a" is not imported' }],
             name: 'vi flagged when combined',
         },
     ]

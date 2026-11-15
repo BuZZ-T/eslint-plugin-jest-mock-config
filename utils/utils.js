@@ -161,7 +161,7 @@ module.exports.getPreviousSibling = function getPreviousSibling(node) {
     return parent.body[index - 1 ?? -1];
 };
 
-module.exports.isJestMockedCall = function isJestMockedCall(node, mockObjects) {
+module.exports.isKnownObjectName = function isKnownObjectName(node, mockObjects) {
     return node.init?.type === 'CallExpression'
         && mockObjects.includes(node.init.callee?.object?.name)
         && node.init.callee?.property?.name === 'mocked';

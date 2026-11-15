@@ -15,9 +15,9 @@ module.exports = {
             url: 'https://github.com/BuZZ-T/eslint-plugin-jest-mock-config/blob/main/docs/rules/jest-mocked-without-mock.md',
         },
         messages: {
-            jestMockPathNotImported: `jest.mocked({{mockedCallSource}}), but it's import path "{{mockedImportPath}}" is not mocked with jest.mock()`,
-            jestMockedPathNotImportedUseFollow: `jest.mocked({{mockedCallSource}}), but it's import path is not found. Be sure to directly import it, or use "follow: true"`,
-            jestMockedPathNotImported: `jest.mocked({{mockedCallSource}}), but it's import path is not found. Be sure to directly import it`
+            mockPathNotImported: `{{objectName}}.mocked({{mockedCallSource}}), but it's import path "{{mockedImportPath}}" is not mocked with {{objectName}}.mock()`,
+            mockedPathNotImportedUseFollow: `{{objectName}}.mocked({{mockedCallSource}}), but it's import path is not found. Be sure to directly import it, or use "follow: true"`,
+            mockedPathNotImported: `{{objectName}}.mocked({{mockedCallSource}}), but it's import path is not found. Be sure to directly import it`,
         },
         schema: [
             {
@@ -46,9 +46,11 @@ module.exports = {
         const mockObjects = getMockObjects(context);
 
         return {
-            VariableDeclarator: function(node) {
+            VariableDeclarator: function (node) {
+                const objectName = node.init.callee?.object?.name;
+
                 if (node.init?.type !== 'CallExpression'
-                    || !mockObjects.includes(node.init.callee?.object?.name)
+                    || !mockObjects.includes(objectName)
                     || node.init.callee?.property?.name !== 'mocked') {
                     return;
                 }
@@ -73,8 +75,9 @@ module.exports = {
                         node,
                         data: {
                             mockedCallSource,
+                            objectName,
                         },
-                        messageId: 'jestMockedPathNotImportedUseFollow',
+                        messageId: 'mockedPathNotImportedUseFollow',
                     });
                     return;
                 }
@@ -89,8 +92,9 @@ module.exports = {
                         node,
                         data: {
                             mockedCallSource,
+                            objectName,
                         },
-                        messageId: 'jestMockedPathNotImported',
+                        messageId: 'mockedPathNotImported',
                     });
                     return;
                 }
@@ -105,8 +109,9 @@ module.exports = {
                         data: {
                             mockedCallSource,
                             mockedImportPath,
+                            objectName,
                         },
-                        messageId: 'jestMockPathNotImported',
+                        messageId: 'mockPathNotImported',
                     });
                 }
             }

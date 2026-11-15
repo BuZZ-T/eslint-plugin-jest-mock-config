@@ -118,7 +118,7 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
                    const x = something;
                    const mock = vi.mocked(something);`,
             options: mockObjectVi,
-            errors: [{ message: 'jest.mock should be directly above jest.mocked' }],
+            errors: [{ message: 'vi.mock should be directly above vi.mocked' }],
             name: 'vi.mock not directly above vi.mocked',
         },
     ]

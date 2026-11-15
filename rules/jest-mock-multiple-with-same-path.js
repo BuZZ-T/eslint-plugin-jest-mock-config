@@ -15,7 +15,7 @@ module.exports = {
             url: 'https://github.com/BuZZ-T/eslint-plugin-jest-mock-config/blob/main/docs/rules/jest-mock-multiple-with-same-path.md',
         },
         messages: {
-            jestMockUsedMoreThanOnce: 'jest.mock(\'{{path}}\') is used more than once',
+            mockUsedMoreThanOnce: '{{objectName}}.mock(\'{{path}}\') is used more than once',
         },
         schema: [
             {
@@ -48,6 +48,8 @@ module.exports = {
                     return;
                 }
 
+                const objectName = node.callee?.object?.name;
+
                 // eslint7-10 compatibility
                 const ancestors = sourceCode?.getAncestors
                     ? sourceCode.getAncestors(node)
@@ -61,10 +63,11 @@ module.exports = {
                 if (pathAmount > 1) {
                     context.report({
                         node,
-                        messageId: 'jestMockUsedMoreThanOnce',
                         data: {
                             path: jestMockCallPath,
+                            objectName,
                         },
+                        messageId: 'mockUsedMoreThanOnce',
                     });
                 }
                 

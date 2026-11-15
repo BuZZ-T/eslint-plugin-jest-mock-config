@@ -15,7 +15,7 @@ module.exports = {
             url: 'https://github.com/BuZZ-T/eslint-plugin-jest-mock-config/blob/main/docs/rules/jest-mock-grouped.md',
         },
         messages: {
-            jestMockShouldFollow: 'jest.mock should directly follow another jest.mock',
+            mockShouldFollow: '{{objectName}}.mock should directly follow another {{objectName}}.mock',
         },
         schema: [
             {
@@ -48,9 +48,14 @@ module.exports = {
 
                 notAfterMock.forEach((mock) => {
                     if (mock) {
+                        const objectName = mock.expression.callee.object.name;
+
                         context.report({
                             node: mock,
-                            messageId: 'jestMockShouldFollow',
+                            data: {
+                                objectName,
+                            },
+                            messageId: 'mockShouldFollow',
                         });
                     }
                 });

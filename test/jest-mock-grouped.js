@@ -61,7 +61,7 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
                    const x = 1;
                    vi.mock('b');`,
             options: mockObjectVi,
-            errors: [{ message: 'jest.mock should directly follow another jest.mock' }],
+            errors: [{ message: 'vi.mock should directly follow another vi.mock' }],
             name: 'ungrouped vi.mock',
         },
     ],

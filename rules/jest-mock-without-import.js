@@ -16,7 +16,7 @@ module.exports = {
             url: 'https://github.com/BuZZ-T/eslint-plugin-jest-mock-config/blob/main/docs/rules/jest-mock-without-import.md',
         },
         messages: {
-            jestMockPathNotImported: 'jest.mock() path "{{path}}" is not imported',
+            mockPathNotImported: '{{objectName}}.mock() path "{{path}}" is not imported',
         },
         schema: [
             {
@@ -91,12 +91,14 @@ module.exports = {
                 const importPaths = getImportPaths(program);
 
                 if (!importPaths.includes(jestMockCallPath) && !pathsToIgnore.includes(jestMockCallPath) && !patternsToIgnore.some(pattern => pattern.test(jestMockCallPath))) {
+                    const objectName = node.callee?.object?.name;
                     context.report({
                         node,
                         data: {
                             path: jestMockCallPath,
+                            objectName,
                         },
-                        messageId: 'jestMockPathNotImported',
+                        messageId: 'mockPathNotImported',
                     });
                 }
             }

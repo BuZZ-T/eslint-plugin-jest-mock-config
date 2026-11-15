@@ -4,7 +4,7 @@
 
 'use strict';
 
-const { getPreviousSibling, getImports, isJestMockedCall, getMockObjects } = require("../utils/utils");
+const { getPreviousSibling, getImports, isKnownObjectName, getMockObjects } = require("../utils/utils");
 
 module.exports = {
     meta: {
@@ -15,9 +15,9 @@ module.exports = {
             url: 'https://github.com/BuZZ-T/eslint-plugin-jest-mock-config/blob/main/docs/rules/jest-mock-directly-above-jest-mocked.md',
         },
         messages: {
-            noJestMockAbove: 'jest.mock should be directly above jest.mocked',
-            cantResolveToImport: 'Can\'t resolve jest.mocked({{mockObject}}) to import',
-            wrongJestMockPath: 'jest.mock path does not match jest.mocked path',
+            noMockAbove: '{{objectName}}.mock should be directly above {{objectName}}.mocked',
+            cantResolveToImport: 'Can\'t resolve {{objectName}}.mocked({{mockObject}}) to import',
+            wrongMockPath: '{{objectName}}.mock path does not match {{objectName}}.mocked path',
         },
         schema: [
             {
@@ -43,7 +43,7 @@ module.exports = {
 
         return {
             VariableDeclarator: function(node) {
-                if (!isJestMockedCall(node, mockObjects)) {
+                if (!isKnownObjectName(node, mockObjects)) {
                     return;
                 }
 
@@ -58,28 +58,35 @@ module.exports = {
                 const imports = getImports(program);
 
                 if (previousStatement?.type === 'VariableDeclaration'
-                    && previousStatement?.declarations.some(declaration => isJestMockedCall(declaration, mockObjects)
+                    && previousStatement?.declarations.some(declaration => isKnownObjectName(declaration, mockObjects)
                     && !!imports[declaration.init?.arguments[0]?.name]
                     && imports[declaration.init?.arguments[0]?.name] === imports[node.init.arguments[0]?.name])) {
                     return;
                 }
+                const objectName = node.init?.callee?.object?.name;
 
                 if (previousStatement?.type !== 'ExpressionStatement') {
                     context.report({
                         node,
-                        messageId: 'noJestMockAbove',
+                        data: {
+                            objectName,
+                        },
+                        messageId: 'noMockAbove',
                     });
-
+                    
                     return;
                 }
+                
+                const previousObjectName = previousStatement?.expression.callee?.object.name;
+                const previousPropertyName = previousStatement.expression.callee?.property.name;
 
-                const objectName = previousStatement.expression.callee?.object.name;
-                const propertyName = previousStatement.expression.callee?.property.name;
-
-                if (!mockObjects.includes(objectName) || propertyName !== 'mock') {
+                if (!mockObjects.includes(previousObjectName) || previousPropertyName !== 'mock') {
                     context.report({
                         node,
-                        messageId: 'noJestMockAbove',
+                        data: {
+                            objectName,
+                        },
+                        messageId: 'noMockAbove',
                     });
 
                     return;
@@ -97,6 +104,7 @@ module.exports = {
                         messageId: 'cantResolveToImport',
                         data: {
                             mockObject: mockedCallSource,
+                            objectName: previousObjectName,
                         },
                     });
                     return;
@@ -105,7 +113,10 @@ module.exports = {
                 if (previousJestMockPath !== importMockPath) {
                     context.report({
                         node,
-                        messageId: 'wrongJestMockPath',
+                        data: {
+                            objectName: previousObjectName,
+                        },
+                        messageId: 'wrongMockPath',
                     });
                 }
             },

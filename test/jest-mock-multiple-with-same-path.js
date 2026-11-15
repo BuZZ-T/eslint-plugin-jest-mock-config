@@ -103,8 +103,8 @@ tester.run(ruleName, require(`../rules/${ruleName}`), {
                    vi.mock('some-absolute-path');`,
             options: mockObjectVi,
             errors: [
-                { message: 'jest.mock(\'some-absolute-path\') is used more than once' },
-                { message: 'jest.mock(\'some-absolute-path\') is used more than once' },
+                { message: 'vi.mock(\'some-absolute-path\') is used more than once' },
+                { message: 'vi.mock(\'some-absolute-path\') is used more than once' },
             ],
             name: 'duplicate vi.mock',
         },
