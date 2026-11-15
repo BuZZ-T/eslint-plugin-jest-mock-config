@@ -22,6 +22,7 @@ module.exports = {
                 type: 'object',
                 properties: {
                     mockObject: {
+                        default: ['jest', 'vi'],
                         oneOf: [
                             { type: 'string' },
                             {

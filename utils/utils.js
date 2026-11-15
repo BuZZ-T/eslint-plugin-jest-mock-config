@@ -1,6 +1,8 @@
+const DEFAULT_MOCK_OBJECTS = ['jest', 'vi'];
+
 /**
  * Returns the configured mock object name(s) (e.g. `jest` and/or `vi`).
- * Reads the `mockObject` option from the rule options. Defaults to `['jest']`.
+ * Reads the `mockObject` option from the rule options. Defaults to `['jest', 'vi']`.
  */
 module.exports.getMockObjects = function getMockObjects(context) {
     const configured = context?.options?.[0]?.mockObject;
@@ -9,7 +11,7 @@ module.exports.getMockObjects = function getMockObjects(context) {
         ? configured
         : (configured ? [configured] : []);
 
-    return list.length ? list : ['jest'];
+    return list.length ? list : DEFAULT_MOCK_OBJECTS;
 };
 
 /**
