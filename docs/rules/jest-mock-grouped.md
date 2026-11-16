@@ -12,6 +12,7 @@
 
 ## Correct usages
 
+*all of them work for `vi.mock` / `vi.mocked` as well*
 
 **code:**
 ```
@@ -19,7 +20,9 @@ jest.mock('../some/path/to/file');
 jest.mock('../some/path/to/other/file');
 ```
 
-### Incorrect usages
+## Incorrect usages
+
+*all of them work for `vi.mock` / `vi.mocked` as well*
 
 **code:**
 ```
@@ -31,10 +34,17 @@ jest.mock('../some/path/to/other/file');
 
 ## Configuration
 
-This ESLint rule is pretty simple. It currently has no configuration.
+| Configuration | Type | Consequence
+|-|-|-
+| mockObject | `string[] | string` | By default, this rule checks both [jest](https://www.npmjs.com/package/jest) and [vitest](https://www.npmjs.com/package/vitest) in the project. If you want to restrict the rule to only check one of them, set `mockObject`
 
 ### Example
 
 ```js
 'jest-mock-grouped': 'error',
+// or
+'jest-mock-grouped': ['error' {
+  mockObject: 'vi'
+},
+
 ```

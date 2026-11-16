@@ -12,7 +12,9 @@
 
 ## Correct usages
 
-#### using import
+*all of them work for `vi.mock` / `vi.mocked` as well*
+
+### using import
 **code:**
 ```
 import someFunction from 'some-package';
@@ -27,7 +29,7 @@ import someFunction from '../some/path/to/file';
 jest.mock('../some/path/to/file');
 ```
 
-#### using import with destructoring
+### using import with destructoring
 **code:**
 ```
 import { someFunction } from 'some-package';
@@ -42,7 +44,7 @@ import { someFunction } from '../some/path/to/file';
 jest.mock('../some/path/to/file');
 ```
 
-#### using import with "*" syntax
+### using import with "*" syntax
 **code:**
 ```
 import * as someFunction from 'some-package';
@@ -56,7 +58,8 @@ import * as someFunction from '../some/path/to/file';
 
 jest.mock('../some/path/to/file');
 ```
-#### using `require`
+
+### using `require`
 **code:**
 ```
 const someFunction = require('some-package');
@@ -70,7 +73,7 @@ const someFunction = require('../some/path/to/file');
 
 jest.mock('../some/path/to/file');
 ```
-#### using `require` with destructoring
+### using `require` with destructoring
 **code:**
 ```
 const { someFunction } = require('some-package');
@@ -85,7 +88,7 @@ const { someFunction } = require('../some/path/to/file');
 jest.mock('../some/path/to/file');
 ```
 
-#### with configuration ignorePaths
+### with configuration ignorePaths
 **code:**
 ```
 jest.mock('some-package');
@@ -95,7 +98,7 @@ jest.mock('some-package');
 ['error', { ignorePaths: ['some-package'] }]
 ```
 
-#### with configuration ignorePatterns using a string
+### with configuration ignorePatterns using a string
 **code:**
 ```
 jest.mock('some-package');
@@ -105,7 +108,7 @@ jest.mock('some-package');
 ['error', { ignorePatterns: ['some-.*'] }]
 ```
 
-#### with configuration ignorePatterns using a regex
+### with configuration ignorePatterns using a regex
 **code:**
 ```
 jest.mock('some-package');
@@ -115,7 +118,7 @@ jest.mock('some-package');
 ['error', { ignorePatterns: [/some-.*/ }]
 ```
 
-#### with configuration ignoreMockWithFactory
+### with configuration ignoreMockWithFactory
 **code:**
 ```
 jest.mock('some-package', () => { someFunction: jest.mock() });
@@ -125,7 +128,7 @@ jest.mock('some-package', () => { someFunction: jest.mock() });
 ['error', { ignoreMockWithFactory: true }]
 ```
 
-#### with configuration ignoreVirtual
+### with configuration ignoreVirtual
 **code:**
 ```
 jest.mock('some-package', () => { someFunction: jest.mock() }, { virtual: true });
@@ -135,21 +138,21 @@ jest.mock('some-package', () => { someFunction: jest.mock() }, { virtual: true }
 ['error', { ignoreVirtual: true }]
 ```
 
-### Incorrect usages
+## Incorrect usages
 
-#### absolute path without import
+### absolute path without import
 **code:**
 ```
 jest.mock('some-package');
 ```
 
-#### relative path without import
+### relative path without import
 **code:**
 ```
 jest.mock('../path/to/someFile');
 ```
 
-#### absolute path with factory without import
+### absolute path with factory without import
 **code:**
 ```
 jest.mock('some-package', () => { someFunction: jest.fn() });
@@ -160,6 +163,7 @@ jest.mock('some-package', () => { someFunction: jest.fn() });
 There are multiple ways to exclude `jest.mock` calls.
 
 This might be useful / necessary when:
+
 * using a factory for mocking without the need to override it
 * using an external mock file like `__mocks__/<file-to-mock>` without the need to override it
 
@@ -169,6 +173,8 @@ This might be useful / necessary when:
 | ignorePatterns | string[] / Regex Array | Basically the same as `ignorePaths`, but Regular Expressions (as string or Regex) can be used.
 | ignoreMockWithFactory | boolean | The second parameter of the `jest.mock()` function is a so called factory. It allows to directly specify the mock without using `.mockReturnValue`. If `ignoreMockWithFactory` is set to `true`, `jest.mock()` calls with a factory set, are not checked.
 | ignoreVirtual | boolean | The third parameter of `jest.mock()` allows to pass options. `virtual` allows mocking of modules, which don't exist in the system. This might be useful for native modules (like e.g. react-native has).
+| mockObject | `string[] | string` | By default, this rule checks both [jest](https://www.npmjs.com/package/jest) and [vitest](https://www.npmjs.com/package/vitest) in the project. If you want to restrict the rule to only check one of them, set `mockObject`
+
 
 ### Example
 
@@ -176,6 +182,7 @@ This might be useful / necessary when:
 'jest-mock-without-import': ['error', {
   ignorePaths: ['some-path'],
   ignorePatterns: ['pattern-as-string', /pattern-as-regex/],
-  ignoreMockWithFactory: true
+  ignoreMockWithFactory: true,
+  mockObject: 'jest',
 }],
 ```

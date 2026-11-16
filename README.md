@@ -2,7 +2,6 @@
 
 [![NPM Version](https://img.shields.io/npm/v/eslint-plugin-jest-mock-config.svg)](https://www.npmjs.com/package/eslint-plugin-jest-mock-config) [![Package License](https://img.shields.io/npm/l/eslint-plugin-jest-mock-config.svg)](https://www.npmjs.com/package/eslint-plugin-jest-mock-config) [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/BuZZ-T/eslint-plugin-jest-mock-config/test.yml?branch=main)](https://img.shields.io/github/actions/workflow/status/BuZZ-T/eslint-plugin-jest-mock-config/test.yml?branch=main)
 
-
 ESLint rules for mocking in `jest` using `jest.mock(...)` or `vitest` using `vi.mock(...)`.
 ## Rules
 
@@ -11,13 +10,13 @@ This Plugin currently contains the following ESLint rules:
 | Name | Description | Documentation
 | - | - | -
 | **Rules showing errors**
-| `jest-mock-without-import` | Reports `jest.mock(<path>)`, when no import of `<path>` exists  | [Link](docs/rules/jest-mock-without-import.md)
-| `jest-mocked-without-mock` | Reports `jest.mocked(<function>)`, when the import of `<function>` is not mocked via `jest.mock`  | [Link](docs/rules/jest-mocked-without-mock.md)
-| `jest-mock-multiple-with-same-path` | Reports, if `jest.mock(<path>)` is used multiple times with the same path in one file | [Link](docs/rules/jest-mock-multiple-with-same-path.md)
+| `jest-mock-without-import` | Reports `jest.mock(<path>)` and `vi.mock(<path>)`, when no import of `<path>` exists  | [Link](docs/rules/jest-mock-without-import.md)
+| `jest-mocked-without-mock` | Reports `jest.mocked(<function>)` and `vi.mocked(<function>)`, when the import of `<function>` is not mocked via `jest.mock` respectively `vi.mock`  | [Link](docs/rules/jest-mocked-without-mock.md)
+| `jest-mock-multiple-with-same-path` | Reports, if `jest.mock(<path>)` and `vi.mock(<path>)` is used multiple times with the same path in one file (mixing `jest.mock` and `vi.mock` is allowed) | [Link](docs/rules/jest-mock-multiple-with-same-path.md)
 | **Layouting rules**
-| `jest-mock-directly-above-jest-mocked` | Reports, if a `jest.mock()` call and its corresponding `jest.mocked` call don't come directly after each other. Conflicts with `jest-mock-grouped` and `jest-mocked-grouped` | [Link](docs/rules/jest-mock-directly-above-jest-mocked.md)
-| `jest-mock-grouped` | Reports, if not all `jest.mock()` calls come directly after each other. Conflicts with `jest-mock-directly-above-jest-mocked` | [Link](docs/rules/jest-mock-grouped.md)
-| `jest-mocked-grouped` | Reports, if not all `jest.mocked()` calls come directly after each other. Conflicts with `jest-mock-directly-above-jest-mocked` | [Link](docs/rules/jest-mocked-grouped.md)
+| `jest-mock-directly-above-jest-mocked` | Reports, if a `jest.mock()` or `vi.mock()` call and its corresponding `jest.mocked` respectively `vi.mocked` call don't come directly after each other. Conflicts with `jest-mock-grouped` and `jest-mocked-grouped` | [Link](docs/rules/jest-mock-directly-above-jest-mocked.md)
+| `jest-mock-grouped` | Reports, if not all `jest.mock()` and `vi.mock()` calls come directly after each other. Conflicts with `jest-mock-directly-above-jest-mocked` | [Link](docs/rules/jest-mock-grouped.md)
+| `jest-mocked-grouped` | Reports, if not all `jest.mocked()` and `vi.mocked()` calls come directly after each other. Conflicts with `jest-mock-directly-above-jest-mocked` | [Link](docs/rules/jest-mocked-grouped.md)
 
 ## Installation
 
@@ -44,13 +43,14 @@ If you are using [jest](https://www.npmjs.com/package/jest) or [vitest](https://
 
 ### When to not use the plugin
 
-If you are not using [jest](https://www.npmjs.com/package/jest) or [vitest](https://www.npmjs.com/package/vitest) in your project
+If you are not using [jest](https://www.npmjs.com/package/jest) or [vitest](https://www.npmjs.com/package/vitest) in your project.
 
 ## Vitest support
 
 All rules also work with [vitest](https://vitest.dev/), which uses `vi.mock()` and `vi.mocked()` instead of the `jest.*` equivalents.
+By default, if `mockObject` is not set, every rule uses both test frameworks in parallel.
 
-By default every rule only looks for `jest`. Set the `mockObject` option to make a rule match `vi` (or both) instead:
+Set the `mockObject` option to make a rule match only `vi` or only `jest` instead:
 
 ```js
 // eslint.config.js
@@ -71,16 +71,6 @@ module.exports = [
     },
 ];
 ```
-
-`mockObject` accepts either a single string or an array of strings, so a project can use both test frameworks in parallel:
-
-```js
-rules: {
-    'jest-mock-config/jest-mock-without-import': ['error', { mockObject: ['jest', 'vi'] }],
-}
-```
-
-When omitted, `mockObject` defaults to `['jest']`, preserving the existing behavior.
 
 ## ESLint7 /  8 / 9 / 10 compatibility
 

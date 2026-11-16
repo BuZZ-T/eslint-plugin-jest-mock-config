@@ -74,7 +74,7 @@ module.exports = {
                         },
                         messageId: 'noMockAbove',
                     });
-                    
+
                     return;
                 }
                 

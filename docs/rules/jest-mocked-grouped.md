@@ -19,7 +19,7 @@ const someObjectMock = jest.mocked(someObject);
 const someOtherObjectMock = jest.mocked(someOtherObject);
 ```
 
-### Incorrect usages
+## Incorrect usages
 
 **code:**
 ```
@@ -31,10 +31,17 @@ const someOtherObjectMock = jest.mocked(someOtherObject);
 
 ## Configuration
 
-This ESLint rule is pretty simple. It currently has no configuration.
+| Configuration | Type | Consequence
+|-|-|-
+| mockObject | `string[] | string` | By default, this rule checks both [jest](https://www.npmjs.com/package/jest) and [vitest](https://www.npmjs.com/package/vitest) in the project. If you want to restrict the rule to only check one of them, set `mockObject`
 
 ### Example
 
 ```js
 'jest-mocked-grouped': 'error',
+// or
+'jest-mocked-grouped': ['error' {
+  mockObject: 'vi'
+},
+
 ```

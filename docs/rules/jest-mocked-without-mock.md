@@ -10,7 +10,7 @@
 
 ## Correct usages
 
-#### using import with object
+### using import with object
 ```ts
 import { someFn } from 'some-absolute-path';
 
@@ -27,7 +27,7 @@ jest.mock('../some/path/to/file');
 const someFnMock = jest.mocked(someFn)'
 ```
 
-#### using default import
+### using default import
 ```ts
 import someFn from 'some-absolute-path';
 
@@ -44,7 +44,7 @@ jest.mock('../some/path/to/file');
 const someFnMock = jest.mocked(someFn)';
 ```
 
-#### using import with asterisk
+### using import with asterisk
 ```ts
 import * as someFn from 'some-absolute-path';
 
@@ -61,7 +61,7 @@ jest.mock('../some/path/to/file');
 const someFnMock = jest.mocked(someFn)';
 ```
 
-#### using require with object
+### using require with object
 ```ts
 const { someFn } = require('some-absolute-path');
 
@@ -78,7 +78,7 @@ jest.mock('../some/path/to/file');
 const someFnMock = jest.mocked(someFn)';
 ```
 
-#### using require with default
+### using require with default
 ```ts
 const someFn = require('some-absolute-path');
 
@@ -95,7 +95,7 @@ jest.mock('../some/path/to/file');
 const someFnMock = jest.mocked(someFn)';
 ```
 
-#### accessing object with `{ follow: true }`
+### accessing object with `{ follow: true }`
 
 **code:**
 ```ts
@@ -113,7 +113,7 @@ const someFnMock = jest.mocked(someFn)';
 ['error', { follow: true }]
 ```
 
-#### using destructoring of import with `{ follow: true }`
+### using destructoring of import with `{ follow: true }`
 
 **code:**
 ```ts
@@ -131,16 +131,16 @@ const someFnMock = jest.mocked(someFn)';
 ['error', { follow: true }]
 ```
 
-### Incorrect usages
+## Incorrect usages
 
-#### missing mock
+### missing mock
 ```
 import { someFn } from 'some-absolute-path';
 
 const someFnMock = jest.mocked(someFn);
 ```
 
-#### no direct import without `{ follow: true }`
+### no direct import without `{ follow: true }`
 ```ts
 const { someObject } = require('some-absolute-path');
 
@@ -153,17 +153,12 @@ const someFnMock = jest.mocked(someFn)';
 
 ## Configuration
 
-### follow: true
+The rule has these configs:
 
-At the moment, only one configuration flag is available. If it's not set, only direct imported functions are regarded. If you mock functions from imported objects, for some reason, use this config:
-```
-{ follow: true }
-```
-
-Be aware:
-
-* this might affect the performance of the linting process if you have many and large test files.
-* this is an **experimental** option, probably not all relevant cases are covered. Report bugs!
+| Configuration | Type | Consequence
+|-|-|-
+| follow | boolean | If `follow` is not set, only direct imported functions are regarded. If you mock functions from imported objects for some reason, use this config. **Be aware:** This might affect the performance of the linting process if you have many and large test files! So this is an **experimental** option, probably not all relevant cases are covered. Report bugs!
+| mockObject | `string[] | string` | By default, this rule checks both [jest](https://www.npmjs.com/package/jest) and [vitest](https://www.npmjs.com/package/vitest) in the project. If you want to restrict the rule to only check one of them, set `mockObject`
 
 ### Example
 
@@ -171,4 +166,9 @@ Be aware:
 'jest-mocked-without-mock': ['error', {
   follow: true,
 }],
+// or
+'jest-mocked-without-mock': ['error' {
+  mockObject: 'vi'
+},
+
 ```
