@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.0-beta.0
+
+* adapt error messages to also show vi.mock and vi.mocked
+* changed the default of `mockObject` config in every rule to ['jest', 'vi']
+* adapted README.md and docs/rules/*.md to match new behavior
+* updated several packages to fix security vulnerabilities
+
 ## 1.1.0
 
 * added `mockObject` option to all rules, enabling the plugin to be used with vitest (`vi.mock(...)` / `vi.mocked(...)`)
